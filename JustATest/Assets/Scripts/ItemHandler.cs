@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class ItemHandler : MonoBehaviour {
 
+    public int JoyStickNum = 1;
     public float GrabDistance = 2.0f;
     private Transform _transSelf;
     private GameObject _activeItem;
     private bool _pickupKeyDown = false;
+    private string _pickupAxis = "";
 	// Use this for initialization
 	void Start () {
         _transSelf = transform;
-	}
+        _pickupAxis = "Pickup" + JoyStickNum;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxis("Pickup") > 0 && !_pickupKeyDown)
+        if (Input.GetAxis(_pickupAxis) > 0 && !_pickupKeyDown)
         {
             _pickupKeyDown = true;
             if (_activeItem != null)
@@ -59,7 +62,7 @@ public class ItemHandler : MonoBehaviour {
             }
 
         }
-        else if (Input.GetAxis("Pickup") == 0)
+        else if (Input.GetAxis(_pickupAxis) == 0)
         {
             _pickupKeyDown = false;
         }
