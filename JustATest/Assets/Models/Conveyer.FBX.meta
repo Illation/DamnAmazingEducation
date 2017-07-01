@@ -8,15 +8,20 @@ ModelImporter:
     100000: //RootNode
     100002: Conveyer
     100004: Object008
+    100006: ConveyerFrame
     400000: //RootNode
     400002: Conveyer
     400004: Object008
+    400006: ConveyerFrame
     2300000: Conveyer
     2300002: Object008
+    2300004: ConveyerFrame
     3300000: Conveyer
     3300002: Object008
+    3300004: ConveyerFrame
     4300000: Object008
     4300002: Conveyer
+    4300004: ConveyerFrame
     9500000: //RootNode
   materials:
     importMaterials: 1
