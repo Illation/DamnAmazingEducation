@@ -86,7 +86,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
             Vector3 dir = (posEnemy - posSelf).normalized;
             transform.position += dir * ThrowingVelocity * Time.deltaTime;
             Vector3 pos = transform.position;
-            pos.y = _startingPoint.y + val * 2.0f;
+            pos.y =  _startY + val * 2.0f;
             transform.position = pos;
         }   
     }
