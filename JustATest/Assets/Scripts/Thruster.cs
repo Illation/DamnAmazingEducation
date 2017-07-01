@@ -18,11 +18,10 @@ public class Thruster : MonoBehaviour
     [SerializeField]
     float ThrustParticleLifetime = 2;
 
-
 	// Use this for initialization
 	void Start ()
     {
-        IsLoaded = true;
+        IsLoaded = false;
 	}
 	
 	// Update is called once per frame
