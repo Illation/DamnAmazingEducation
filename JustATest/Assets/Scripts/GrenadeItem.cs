@@ -10,6 +10,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     private GameObject _throwingPlayer;
     private GameObject _enemyPlayer;
     private Vector3 _startingPoint;
+    private Vector3 _spinDir;
 
     public bool Grab(Transform origin)
     {
@@ -21,6 +22,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
         if (_thrown)
         {
+            _spinDir = -_spinDir;
             _pauseTime = Time.realtimeSinceStartup;
             Time.timeScale = 0;
             _paused = true;
@@ -29,12 +31,12 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         }
         else
         {
+            _spinDir = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
             transform.SetParent(origin);
             transform.localPosition = Vector3.zero;
             return true;
         }
     }
-
     public bool Release()
     {
         _startingPoint = transform.position;
@@ -57,6 +59,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
         if (_thrown)
         {
+            transform.Rotate(_spinDir * 10.0f);
             Vector3 posSelf = transform.position;
             posSelf.y = 0;
             Vector3 posEnemy = _enemyPlayer.transform.position;
