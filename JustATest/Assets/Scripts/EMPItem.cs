@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class EMPItem : MonoBehaviour, IItem
 {
+    public float PickupRadius = 3.0f;
     public float ThrowingVelocity = 5.0f;
     private GameObject _throwingPlayer;
-    private Vector3 _startingPoint;
+    private GameObject _enemyPlayer;
+    private Vector3 _targetPos;
     private WallController _wall;
     private List<Thruster> _thrusters;
     private bool _thrown;
@@ -20,6 +22,7 @@ public class EMPItem : MonoBehaviour, IItem
     private bool _selectingTarget = false;
     private int _thrusterID = 0;
     private int _maxThrusterID = 0;
+
     public bool Grab(Transform origin)
     {
         if (!_thrown)
@@ -27,20 +30,28 @@ public class EMPItem : MonoBehaviour, IItem
             _selectingTarget = true;
             _wall = GameObject.Find("Wall").GetComponent<WallController>();
             _maxThrusterID = _wall.LeftThrusters.Count - 1;
+            _thrusterID = (int)Random.Range(0, _maxThrusterID + 0.1f);
+
             _throwingPlayer = origin.root.gameObject;
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+            if (players[0] == _throwingPlayer) _enemyPlayer = players[1];
+            else _enemyPlayer = players[0];
 
             transform.SetParent(origin);
             transform.localPosition = Vector3.zero;
-            int ownerNum = (origin.gameObject.name == "Player 1" ? 1 : 2); //hacks
+            int ownerNum = (origin.transform.root.gameObject.name == "Player 1" ? 1 : 2); //hacks
 
             if (ownerNum == 1)
             {
-                _thrusters = _wall.LeftThrusters;
+                _thrusters = _wall.RightThrusters;
             }
             else
             {
-                _thrusters = _wall.RightThrusters;
+                _thrusters = _wall.LeftThrusters;
             }
+
+            _thrusters[_thrusterID].IsHighlighted = true;
 
             return true;
         }
@@ -60,7 +71,7 @@ public class EMPItem : MonoBehaviour, IItem
         if (!_thrown)
         {
             _targetThruster = _thrusters[_thrusterID];
-            _startingPoint = transform.position;
+            _targetPos = _targetThruster.transform.Find("EMPanchor").position;
             transform.SetParent(null);
             _thrown = true;
             _selectingTarget = false;
@@ -75,21 +86,38 @@ public class EMPItem : MonoBehaviour, IItem
     {
         if (_selectingTarget)
         {
-            Debug.DrawRay(_thrusters[_thrusterID].transform.position, Vector3.forward * 5.0f);
             _selectionTimer += Time.deltaTime;
             if (_selectionTimer >= SelectionSwitchDelay)
             {
+                _thrusters[_thrusterID].IsHighlighted = false;
+
                 _selectionTimer = 0;
                 ++_thrusterID;
                 if (_thrusterID > _maxThrusterID)
                 {
                     _thrusterID = 0;
                 }
+
+                _thrusters[_thrusterID].IsHighlighted = true;
             }
         }
 
         if (_attached)
         {
+            Vector3 selfPos = transform.position;
+            selfPos.y = 0;
+            Vector3 playerPos = _enemyPlayer.transform.position;
+            playerPos.y = 0;
+            float distToPlayer = (_enemyPlayer.transform.position - transform.position).magnitude;
+
+            if (distToPlayer < PickupRadius)
+            {
+                // eat
+                ObjectController objCont = this.GetComponent<ObjectController>();
+                if (objCont != null) objCont.Destroy();
+                return;
+            }
+
             _explosionTimer += Time.deltaTime;
 
             if (_explosionTimer > ExplosionTime)
@@ -101,32 +129,28 @@ public class EMPItem : MonoBehaviour, IItem
         {
             Vector3 posSelf = transform.position;
             posSelf.y = 0;
-            Vector3 posThruster = _targetThruster.transform.position;
+            Vector3 posThruster = _targetPos;
             posThruster.y = 0;
-            Vector3 posStart = _startingPoint;
-            posStart.y = 0;
 
-            float distFromEnemy = (posThruster - posSelf).magnitude;
+            float distFromThruster = (posThruster - posSelf).magnitude;
 
-            if (distFromEnemy < 0.5f)
+            if (distFromThruster < 0.1f)
             {
                 AttachToThruster();
                 return;
             }
 
-            float maxDist = (posThruster - posStart).magnitude;
-            float val = 1.0f - Mathf.Abs((maxDist - distFromEnemy) / maxDist * 2.0f - 1.0f);
-            Vector3 dir = (posThruster - posSelf).normalized;
+            Vector3 dir = (_targetPos - transform.position).normalized;
             transform.position += dir * ThrowingVelocity * Time.deltaTime;
-            Vector3 pos = transform.position;
-            pos.y = _startingPoint.y + val * 2.0f;
-            transform.position = pos;
         }
+
+        transform.Rotate(new Vector3(0, _explosionTimer * 20.0f, 0));
     }
 
     void AttachToThruster()
     {
         _attached = true;
+        _targetThruster.IsHighlighted = false;
     }
 
     void Explode()

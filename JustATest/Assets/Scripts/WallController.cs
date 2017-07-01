@@ -39,6 +39,8 @@ public class WallController : MonoBehaviour
     [SerializeField]
     float FieldWidth;
     [SerializeField]
+    float MaxFieldWidth;
+    [SerializeField]
     Explosion ExplosionPrefab;
     public bool LeftWon = false;
     public bool RightWon = false;
@@ -82,7 +84,10 @@ public class WallController : MonoBehaviour
         _movement += wallForce * moveMult * Time.deltaTime;
         _movement -= MovementDampener * _movement * Time.deltaTime;
 
-        transform.position += new Vector3(0, 0, _movement) * Time.deltaTime;
+        if(Mathf.Abs(transform.position.z)<MaxFieldWidth)
+        {
+            transform.position += new Vector3(0, 0, _movement) * Time.deltaTime;
+        }
 
         //Upgrade Thrusters
         _upgradeTimer += Time.deltaTime;

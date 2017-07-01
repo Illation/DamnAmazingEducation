@@ -9,7 +9,7 @@ public class Thruster : MonoBehaviour
     public bool IsLoaded = false;
     public bool IsActivated = false;
 
-    public bool IsHighlighted;
+    public bool IsHighlighted = false;
 
     [SerializeField]
     private float ThrustDeceleration = 0.25f;
@@ -56,7 +56,7 @@ public class Thruster : MonoBehaviour
                 FuelCell.SetActive(false);
             }
         }
-        ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust;
+        ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust * (UpgradeLevel + 1);
 
         switch (UpgradeLevel)
         {

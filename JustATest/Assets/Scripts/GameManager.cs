@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour {
 
@@ -10,6 +12,10 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public WallController wall;
 
+    [SerializeField]
+    Canvas GameOverUI;
+    public bool GameOver = true;
+
     void Awake() {
         if (instance == null)
             instance = this;
@@ -19,8 +25,40 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start() {
+    void Start()
+    {
         wall = GameObject.Find("Wall").GetComponent<WallController>();
+
+        GameOverUI = GameObject.Find("EndGameUI").GetComponent<Canvas>();
+
+        GameOverUI.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        wall = GameObject.Find("Wall").GetComponent<WallController>();
+        if(!GameOverUI)
+        {
+            GameOverUI = GameObject.Find("EndGameUI").GetComponent<Canvas>();
+        }
+        if(wall.LeftWon || wall.RightWon)
+        {
+            //Open UI
+            GameOver = true;
+            GameOverUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameOverUI.gameObject.SetActive(false);
+        }
+    }
+
+    public void RestartGame()
+    {
+        wall.LeftWon = false;
+        wall.RightWon = false;
+        objects.Clear();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void DestroyObject(ObjectController obj)
