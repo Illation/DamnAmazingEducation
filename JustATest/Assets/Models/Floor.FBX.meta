@@ -55,6 +55,7 @@ ModelImporter:
     2300026: Floor
     2300028: FloorLeft
     2300030: FloorRight
+    2300032: //RootNode
     3300000: Box002
     3300002: Plane001
     3300004: Plane002
@@ -71,6 +72,7 @@ ModelImporter:
     3300026: Floor
     3300028: FloorLeft
     3300030: FloorRight
+    3300032: //RootNode
     4300000: Box002
     4300002: Plane001
     4300004: Plane002
