@@ -13,6 +13,9 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     private float _startY;
     private Vector3 _spinDir;
 
+    [SerializeField]
+    Explosion ExplosionPrefab;
+
     public bool Grab(Transform origin)
     {
         _throwingPlayer = origin.root.gameObject;
@@ -93,6 +96,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
     void Explode()
     {
+        Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
         ObjectController objCont = this.GetComponent<ObjectController>();
         if (objCont != null) objCont.Destroy();
     }
