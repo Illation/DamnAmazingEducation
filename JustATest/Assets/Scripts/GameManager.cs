@@ -16,4 +16,10 @@ public class GameManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
     }
+
+    public void DestroyObject(ObjectController obj)
+    {
+        objects.Remove(obj);
+        Destroy(obj.gameObject);
+    }
 }
