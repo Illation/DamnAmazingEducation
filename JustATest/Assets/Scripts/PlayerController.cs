@@ -34,13 +34,13 @@ public class PlayerController : MonoBehaviour {
 
     void OnControllerColliderHit(ControllerColliderHit hit) {
         // Check what the controller hit and act accordingly.
-        switch (hit.gameObject.tag) {
-            //case "Untagged":
-            //    return;
-            //default:
-            //    Debug.Log("Tag not found!");
-            //    return;
-        }
+        //switch (hit.gameObject.tag) {
+        //    //case "Untagged":
+        //    //    return;
+        //    //default:
+        //    //    Debug.Log("Tag not found!");
+        //    //    return;
+        //}
     }
 
     // Handles all the movement.

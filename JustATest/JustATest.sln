@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustATest", "JustATest.csproj", "{D1933A70-366E-5E11-65B2-372C7CDB40E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustATest.CSharp", "JustATest.CSharp.csproj", "{FD9B50BC-72BB-478C-CD01-E0D42AC50E1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D1933A70-366E-5E11-65B2-372C7CDB40E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1933A70-366E-5E11-65B2-372C7CDB40E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1933A70-366E-5E11-65B2-372C7CDB40E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1933A70-366E-5E11-65B2-372C7CDB40E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9B50BC-72BB-478C-CD01-E0D42AC50E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9B50BC-72BB-478C-CD01-E0D42AC50E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9B50BC-72BB-478C-CD01-E0D42AC50E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9B50BC-72BB-478C-CD01-E0D42AC50E1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
