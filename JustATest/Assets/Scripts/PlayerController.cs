@@ -15,12 +15,13 @@ public class PlayerController : MonoBehaviour {
     public float interactDistance = 0.5f; // How far player can interact with objects
     public bool playerTwo = false;
     public TextureOffsetController tracks;
+    public ParticleSystem[] trackParticles;
 
     // Private variables
     //private CharacterController _controller = null; // Reference to the character controller
     private Rigidbody _body = null;
     private Vector3 _moveDirection = Vector3.zero;  // Which direction he's moving
-    private float _sqrInteractDistance = 0;         // Interact distance squared, for performance.              
+    private float _sqrInteractDistance = 0;         // Interact distance squared, for performance.  
 
     // Methods
     // -------
@@ -57,17 +58,26 @@ public class PlayerController : MonoBehaviour {
     //    _controller.Move(_moveDirection * Time.deltaTime);
     //}
 
+
     void HandleMovement() {
         if (!playerTwo) _moveDirection = Input.GetAxisRaw("Vertical") * cam.transform.forward + Input.GetAxisRaw("Horizontal") * cam.transform.right;
         else _moveDirection = Input.GetAxisRaw("Vertical 2") * cam.transform.forward + Input.GetAxisRaw("Horizontal 2") * cam.transform.right;
         _moveDirection.y = 0;
         if (_moveDirection != Vector3.zero) transform.rotation = Quaternion.LookRotation(_moveDirection);
         _moveDirection.Normalize();
-        //_moveDirection *= movementSpeed;
-        //_body.velocity = _moveDirection * Time.deltaTime;
         _body.velocity = _moveDirection * movementSpeed;
-        if (_body.velocity.sqrMagnitude > Mathf.Epsilon) tracks.active = true;
-        else tracks.active = false;
+        if (_body.velocity.sqrMagnitude > Mathf.Epsilon) {
+            tracks.active = true;
+            if (!trackParticles[0].isEmitting) trackParticles[0].Simulate(0, true, true);
+            if (!trackParticles[1].isEmitting) trackParticles[1].Simulate(0, true, true);
+            trackParticles[0].Play();
+            trackParticles[1].Play();
+        }
+        else {
+            tracks.active = false;
+            trackParticles[0].Stop();
+            trackParticles[1].Stop();
+        }
         _body.angularVelocity = Vector3.zero;
     }
 
