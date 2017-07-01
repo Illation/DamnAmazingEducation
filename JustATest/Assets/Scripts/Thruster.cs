@@ -18,10 +18,14 @@ public class Thruster : MonoBehaviour
     [SerializeField]
     float ThrustParticleLifetime = 2;
 
+    [SerializeField]
+    GameObject FuelCell;
+
 	// Use this for initialization
 	void Start ()
     {
         IsLoaded = false;
+        FuelCell.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -37,6 +41,7 @@ public class Thruster : MonoBehaviour
                 Thrust = 0;
                 IsActivated = false;
                 IsLoaded = false;
+                FuelCell.SetActive(false);
             }
         }
         ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust;
@@ -53,6 +58,7 @@ public class Thruster : MonoBehaviour
 
     public void Load()
     {
-        IsLoaded = true;        
+        IsLoaded = true;
+        FuelCell.SetActive(true);
     }
 }
