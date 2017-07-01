@@ -5,7 +5,7 @@ using UnityEngine;
 public class FuelController : MonoBehaviour, IItem {
 
     private PlayerController owner = null;
-    private float interactionDistance = 1.0f; // Careful, this should be squared!
+    private float interactionDistance = 3.0f; // Careful, this should be squared!
 
     public bool Grab(Transform origin) {
         transform.SetParent(origin);
@@ -16,12 +16,18 @@ public class FuelController : MonoBehaviour, IItem {
 
     public bool Release() {
         Thruster closestThruster = FindClosestThruster();
-        if (closestThruster != null && (closestThruster.transform.position - transform.position).sqrMagnitude <= interactionDistance) {
-
+        Debug.Log("Trying to load " + closestThruster);
+        if (closestThruster != null && (closestThruster.transform.position - transform.position).sqrMagnitude <= interactionDistance && !closestThruster.IsLoaded) {
+            Debug.Log("Loading " + closestThruster);
+            closestThruster.Load();
+            GameManager.instance.DestroyObject(this.GetComponent<ObjectController>());
+            return true;
         }
-        ObjectController objCont = GetComponent<ObjectController>();
-        if (objCont != null) objCont.Destroy();
-        return true;
+        else {
+            if (!closestThruster.IsLoaded ) Debug.Log("Thruster too far away!");
+            else Debug.Log("Thruster already loaded!");
+        }
+        return false;
     }
 
     private Thruster FindClosestThruster() {
