@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemHandler : MonoBehaviour {
 
+    public Transform GrabOrigin;
     public int JoyStickNum = 1;
     public float GrabDistance = 2.0f;
     private Transform _transSelf;
@@ -31,10 +32,10 @@ public class ItemHandler : MonoBehaviour {
                 if (items.Length > 0)
                 {
                     int closestIndex = 0;
-                    float minLen = (_transSelf.position - items[0].transform.position).sqrMagnitude;
+                    float minLen = (GrabOrigin.position - items[0].transform.position).sqrMagnitude;
                     for (int i = 1; i < items.Length; i++)
                     {
-                        float currLen = (_transSelf.position - items[i].transform.position).sqrMagnitude;
+                        float currLen = (GrabOrigin.position - items[i].transform.position).sqrMagnitude;
                         if (currLen < minLen)
                         {
                             minLen = currLen;
@@ -47,7 +48,7 @@ public class ItemHandler : MonoBehaviour {
                     IItem itemComponent = items[closestIndex].GetComponent<IItem>();
                     if (itemComponent != null)
                     {
-                        if (itemComponent.Grab(_transSelf))
+                        if (itemComponent.Grab(GrabOrigin))
                         {
                             _activeItem = items[closestIndex];
                             ObjectController objCont = items[closestIndex].GetComponent<ObjectController>();
