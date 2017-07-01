@@ -91,6 +91,8 @@
      <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
      <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+     <Compile Include="Assets\Scripts\EMPItem.cs" />
+     <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\FuelController.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GenericItem.cs" />
@@ -100,9 +102,9 @@
      <Compile Include="Assets\Scripts\ObjectController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\SpawnerController.cs" />
+     <Compile Include="Assets\Scripts\TextureOffsetController.cs" />
      <Compile Include="Assets\Scripts\Thruster.cs" />
      <Compile Include="Assets\Scripts\ThrusterButton.cs" />
-     <Compile Include="Assets\Scripts\UVPanner.cs" />
      <Compile Include="Assets\Scripts\WallController.cs" />
      <Compile Include="Assets\Scripts\Waypoint.cs" />
      <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
@@ -112,6 +114,7 @@
      <None Include="Assets\PostProcessing\Resources\Shaders\LutGen.shader" />
      <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
      <None Include="Assets\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
+     <None Include="Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
      <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\ACES.cginc" />
@@ -134,6 +137,7 @@
      <None Include="Assets\PostProcessing\Resources\Shaders\TAA.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\EyeHistogram.compute" />
      <None Include="Assets\PostProcessing\Resources\Shaders\TAA.cginc" />
+     <None Include="Assets\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.cginc" />
      <None Include="Assets\PostProcessing\Resources\Shaders\GrainGen.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\FXAA.shader" />
@@ -141,6 +145,7 @@
      <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.cginc" />
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceRaytrace.cginc" />
      <None Include="Assets\PostProcessing\Resources\Shaders\Bloom.shader" />
+     <None Include="Assets\Projectors\Shaders\ProjectorMultiply.shader" />
      <None Include="Assets\PostProcessing\Editor Resources\Monitors\VectorscopeRender.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
