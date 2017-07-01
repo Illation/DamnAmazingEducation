@@ -42,6 +42,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     }
     public bool Release()
     {
+        if (!_enemyPlayer.GetComponent<PlayerController>().alive) return false;
         _startingPoint = transform.position;
         _thrown = true;
         transform.SetParent(null);

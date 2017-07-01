@@ -55,7 +55,10 @@ public class WallController : MonoBehaviour
         {
             var instance = Instantiate(ThrusterPrefab, 
                 new Vector3(-WallWidth*0.5f+PosOffsetDelta*0.5f+i*PosOffsetDelta, transform.position.y, -WallDepth*0.5f), 
-                Quaternion.Euler(new Vector3(0, 180, 180)), this.transform);
+                Quaternion.Euler(new Vector3(0, 0, 0)), this.transform);
+            Vector3 scale = instance.transform.localScale;
+            scale.z = -scale.z;
+            instance.transform.localScale = scale;
             LeftThrusters.Add(instance);
         }
 
