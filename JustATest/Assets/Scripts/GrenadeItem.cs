@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrenadeItem : MonoBehaviour, IItem  {
     private bool _thrown = false;
-    public float ThrowingVelocity = 5.0f;
+    public float ThrowingVelocity = 1.0f;
     private GameObject _throwingPlayer;
     private GameObject _enemyPlayer;
 
@@ -42,6 +42,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         if (_thrown)
         {
             Vector3 dir = (_enemyPlayer.transform.position - transform.position).normalized;
+            transform.position += dir * ThrowingVelocity;
         }   
     }
 
