@@ -96,10 +96,19 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GenericItem.cs" />
     <Compile Include="Assets\Scripts\IItem.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\ObjectController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerItemHandler.cs" />
     <Compile Include="Assets\Scripts\SpawnerController.cs" />
+=======
+    <Compile Include="Assets\Scripts\ItemHandler.cs" />
+    <Compile Include="Assets\Scripts\ObjectController.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\SpawnerController.cs" />
+    <Compile Include="Assets\Scripts\Thruster.cs" />
+    <Compile Include="Assets\Scripts\WallController.cs" />
+>>>>>>> 5bb76cdfa62003fccc10c13f495ca061300527c6
     <Compile Include="Assets\Scripts\Waypoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
