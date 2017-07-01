@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Thruster : MonoBehaviour
 {
-
     public float Thrust = 0;
     public bool IsLoaded = false;
     public bool IsActivated = false;
@@ -16,7 +15,7 @@ public class Thruster : MonoBehaviour
     private float _thrustDec = 0;
 
     [SerializeField]
-    ParticleSystem ThrustParticles;
+    public ParticleSystem ThrustParticles;//, ElectricityParticles;
     [SerializeField]
     float ThrustParticleLifetime = 2;
 
@@ -38,7 +37,8 @@ public class Thruster : MonoBehaviour
     {
         IsLoaded = false;
         FuelCell.SetActive(false);
-	}
+        //ElectricityParticles.Stop();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -99,5 +99,7 @@ public class Thruster : MonoBehaviour
         IsActivated = false;
         IsLoaded = false;
         FuelCell.SetActive(false);
+        //ElectricityParticles.Simulate(0, true, true);
+        //ElectricityParticles.Play();
     }
 }
