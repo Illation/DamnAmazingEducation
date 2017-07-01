@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
     public TextureOffsetController tracks;
     public ParticleSystem[] trackParticles;
     public ParticleSystem smokeParticles;
-    public GameObject spawn, exit, entry;
+    public GameObject spawn;//, exit, entry; unused currently
     [HideInInspector]
     public bool alive = true;
 
@@ -56,11 +56,11 @@ public class PlayerController : MonoBehaviour {
                     smokeParticles.Clear();
                 }
             }
-            else if ((transform.position - exit.transform.position).sqrMagnitude > 0.5f) {
-                transform.position = Vector3.MoveTowards(transform.position, exit.transform.position, 0.1f);
-            }
+            //else if ((transform.position - exit.transform.position).sqrMagnitude > 0.5f) {
+            //    transform.position = Vector3.MoveTowards(transform.position, exit.transform.position, 0.1f);
+            //}
             else {
-                transform.position = entry.transform.position;
+                //transform.position = entry.transform.position;
                 alive = true;
                 GetComponent<Collider>().enabled = true;
             }
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour {
                 rend.enabled = false;
             }
             alive = false;
-            _respawnTimer = 1.0f;
+            _respawnTimer = 1.5f;
             _smoking = false;
             trackParticles[0].Stop();
             trackParticles[1].Stop();
