@@ -5,6 +5,8 @@ using UnityEngine;
 public class GrenadeItem : MonoBehaviour, IItem  {
     private bool _thrown = false;
     public float ThrowingVelocity = 5.0f;
+    private float _pauseTime;
+    private bool _paused = false;
     private GameObject _throwingPlayer;
     private GameObject _enemyPlayer;
 
@@ -18,7 +20,10 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
         if (_thrown)
         {
-            ThrowingVelocity *= 1.2f;
+            _pauseTime = Time.realtimeSinceStartup;
+            Time.timeScale = 0;
+            _paused = true;
+            ThrowingVelocity += 1.5f;
             return true;
         }
         else
@@ -39,9 +44,19 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     // Update is called once per frame
     void Update()
     {
+        if (_paused)
+        {
+            if (Time.realtimeSinceStartup - _pauseTime > 0.1f)
+            {
+                _paused = false;
+                Time.timeScale = 1;
+            }
+        }
+
         if (_thrown)
         {
             Vector3 dir = (_enemyPlayer.transform.position - transform.position).normalized;
+            transform.position += dir * ThrowingVelocity * Time.deltaTime;
         }   
     }
 
