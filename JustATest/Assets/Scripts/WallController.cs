@@ -54,11 +54,9 @@ public class WallController : MonoBehaviour
                 new Vector3(-WallWidth * 0.5f + PosOffsetDelta *0.5f+i*PosOffsetDelta, transform.position.y, WallDepth*0.5f), 
                 Quaternion.identity, this.transform);
             RightThrusters.Add(instance);
-            instance.Activate();
         }
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         //Move Wall
