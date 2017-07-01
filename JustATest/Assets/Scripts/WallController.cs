@@ -43,7 +43,7 @@ public class WallController : MonoBehaviour
         {
             var instance = Instantiate(ThrusterPrefab, 
                 new Vector3(-WallWidth*0.5f+PosOffsetDelta*0.5f+i*PosOffsetDelta, transform.position.y, -WallDepth*0.5f), 
-                Quaternion.Euler(new Vector3(0, 180, 0)), this.transform);
+                Quaternion.Euler(new Vector3(0, 180, 180)), this.transform);
             LeftThrusters.Add(instance);
         }
 
@@ -52,7 +52,7 @@ public class WallController : MonoBehaviour
         {
             var instance = Instantiate(ThrusterPrefab, 
                 new Vector3(-WallWidth * 0.5f + PosOffsetDelta *0.5f+i*PosOffsetDelta, transform.position.y, WallDepth*0.5f), 
-                Quaternion.identity, this.transform);
+                Quaternion.Euler(new Vector3(0, 0, 0)), this.transform);
             RightThrusters.Add(instance);
         }
 	}
