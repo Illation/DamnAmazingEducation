@@ -62,55 +62,44 @@ public class PlayerController : MonoBehaviour
     void HandleInput()
     {
             // Use A button on controller or E key to interact with closest object
-            //if (Input.GetButtonDown("Interact")) Interact();
+            // if (Input.GetButtonDown("Interact")) Interact();
     }
 
-    // Interact with the closest, reachable interactable object.
-    //void Interact()
-    //{
-    //    if (interactableObjects.Length == 0) return;
-    //    InteractableObject closestObject = interactableObjects[0];
+    //// Interact with the closest, reachable interactable object.
+    //void Interact() {
+    //    if (GameManager.instance.objects.Count <= 0) return;
+    //    ObjectController closestObject = GameManager.instance.objects[0];
     //    float closestDistance = (closestObject.transform.position - transform.position).sqrMagnitude;
     //    float distance = 0.0f;
-    //    foreach (InteractableObject obj in interactableObjects)
-    //    {
-    //        if (obj.gameObject.GetComponent<PluckPatchController>() && !obj.GetComponent<PluckPatchController>().active) continue;
+    //    foreach (ObjectController obj in GameManager.instance.objects) {
     //        distance = (obj.transform.position - transform.position).sqrMagnitude;
-    //        if (distance < closestDistance)
-    //        {
+    //        if (distance < closestDistance) {
     //            closestDistance = distance;
     //            closestObject = obj;
     //        }
     //    }
 
-    //    if (closestDistance <= _sqrInteractDistance)
-    //    {
-    //        if (closestObject.gameObject.GetComponent<PluckPatchController>() && !closestObject.GetComponent<PluckPatchController>().active) return;
-    //        if (closestObject.gameObject.GetComponent<LeverController>() || closestObject.gameObject.GetComponent<TurnwheelController>()) leverSound.Play();
+    //    if (closestDistance <= _sqrInteractDistance) {
     //        closestObject.Interact();
     //    }
     //}
 
     //// See what the closest object is and position the button accordingly.
-    //void CheckClosestInteraction()
-    //{
+    //void CheckClosestInteraction() {
     //    if (interactableObjects.Length == 0) return;
     //    InteractableObject closestObject = interactableObjects[0];
     //    float closestDistance = (closestObject.transform.position - transform.position).sqrMagnitude;
     //    float distance = 0.0f;
-    //    foreach (InteractableObject obj in interactableObjects)
-    //    {
+    //    foreach (InteractableObject obj in interactableObjects) {
     //        if (obj.gameObject.GetComponent<PluckPatchController>() && !obj.GetComponent<PluckPatchController>().active) continue;
     //        distance = (obj.transform.position - transform.position).sqrMagnitude;
-    //        if (distance < closestDistance)
-    //        {
+    //        if (distance < closestDistance) {
     //            closestDistance = distance;
     //            closestObject = obj;
     //        }
     //    }
 
-    //    if (closestDistance <= _sqrInteractDistance)
-    //    {
+    //    if (closestDistance <= _sqrInteractDistance) {
     //        if (closestObject.gameObject.GetComponent<PluckPatchController>() && !closestObject.GetComponent<PluckPatchController>().active) interactButton.transform.position = new Vector3(1000, 1000, 1000);
     //        else closestObject.ShowInteractable(interactButton);
     //    }
