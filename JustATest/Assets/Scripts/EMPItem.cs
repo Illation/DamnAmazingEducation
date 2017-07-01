@@ -8,6 +8,7 @@ public class EMPItem : MonoBehaviour, IItem
     private GameObject _throwingPlayer;
     private Vector3 _startingPoint;
     private WallController _wall;
+    private List<Thruster> _thrusters;
     private bool _thrown;
     private bool _attached;
     private Thruster _targetThruster;
@@ -16,20 +17,31 @@ public class EMPItem : MonoBehaviour, IItem
     private float _selectionTimer = 0;
     public float SelectionSwitchDelay = 0.3f;
     public float ExplosionTime = 2.0f;
-    private bool _selectingTarget = true;
+    private bool _selectingTarget = false;
     private int _thrusterID = 0;
     private int _maxThrusterID = 0;
     public bool Grab(Transform origin)
     {
         if (!_thrown)
         {
+            _selectingTarget = true;
             _wall = GameObject.Find("Wall").GetComponent<WallController>();
             _maxThrusterID = _wall.LeftThrusters.Count - 1;
             _throwingPlayer = origin.root.gameObject;
 
             transform.SetParent(origin);
             transform.localPosition = Vector3.zero;
-            _ownerNum = (origin.gameObject.name == "Player 1" ? 1 : 2); //hacks
+            int ownerNum = (origin.gameObject.name == "Player 1" ? 1 : 2); //hacks
+
+            if (ownerNum == 1)
+            {
+                _thrusters = _wall.LeftThrusters;
+            }
+            else
+            {
+                _thrusters = _wall.RightThrusters;
+            }
+
             return true;
         }
         else if (_attached)
@@ -47,20 +59,11 @@ public class EMPItem : MonoBehaviour, IItem
     {
         if (!_thrown)
         {
-            List<Thruster> thrusters;
-            if (_ownerNum == 1)
-            {
-                thrusters = _wall.LeftThrusters;
-            }
-            else
-            {
-                thrusters = _wall.RightThrusters;
-            }
-
-            _targetThruster = thrusters[_thrusterID];
+            _targetThruster = _thrusters[_thrusterID];
             _startingPoint = transform.position;
             transform.SetParent(null);
             _thrown = true;
+            _selectingTarget = false;
         }
 
 
@@ -72,6 +75,7 @@ public class EMPItem : MonoBehaviour, IItem
     {
         if (_selectingTarget)
         {
+            Debug.DrawRay(_thrusters[_thrusterID].transform.position, Vector3.forward * 5.0f);
             _selectionTimer += Time.deltaTime;
             if (_selectionTimer >= SelectionSwitchDelay)
             {
