@@ -77,7 +77,7 @@ public class WallController : MonoBehaviour
 
             wallForce -= RightThrusters[i].Thrust;
         }
-        float moveMult = MovementMultiplier + UpgradeMultiplier * _upgradeLevel;
+        float moveMult = MovementMultiplier + UpgradeMultiplier * _upgradeLevel * _upgradeLevel;
 
         _movement += wallForce * moveMult * Time.deltaTime;
         _movement -= MovementDampener * _movement * Time.deltaTime;
