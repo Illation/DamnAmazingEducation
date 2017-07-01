@@ -10,7 +10,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     private GameObject _throwingPlayer;
     private GameObject _enemyPlayer;
     private Vector3 _startingPoint;
-    private Vector3 _spinDir = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
+    private Vector3 _spinDir;
 
     public bool Grab(Transform origin)
     {
@@ -31,6 +31,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         }
         else
         {
+            _spinDir = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
             transform.SetParent(origin);
             transform.localPosition = Vector3.zero;
             return true;
