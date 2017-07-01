@@ -9,6 +9,8 @@ public class Thruster : MonoBehaviour
     public bool IsLoaded = false;
     public bool IsActivated = false;
 
+    public bool IsHighlighted;
+
     [SerializeField]
     private float ThrustDeceleration = 0.25f;
     private float _thrustDec = 0;
@@ -27,6 +29,9 @@ public class Thruster : MonoBehaviour
     GameObject Upgrade1;
     [SerializeField]
     GameObject Upgrade2;
+
+    [SerializeField]
+    GameObject Highlight;
 
 	// Use this for initialization
 	void Start ()
@@ -68,6 +73,8 @@ public class Thruster : MonoBehaviour
                 Upgrade2.SetActive(true);
                 break;
         }
+
+        Highlight.SetActive(IsHighlighted);
 	}
 
     public void Activate()
