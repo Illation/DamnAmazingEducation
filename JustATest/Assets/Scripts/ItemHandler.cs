@@ -25,6 +25,7 @@ public class ItemHandler : MonoBehaviour {
             if (_activeItem != null)
             {
                 _activeItem.GetComponent<IItem>().Release();
+                _activeItem = null;
             }
             else
             {
@@ -43,7 +44,7 @@ public class ItemHandler : MonoBehaviour {
                         }
                     }
 
-                    if (!(minLen <= GrabDistance)) return;
+                    if (!(minLen <= (GrabDistance * GrabDistance))) return;
 
                     IItem itemComponent = items[closestIndex].GetComponent<IItem>();
                     if (itemComponent != null)

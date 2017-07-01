@@ -2,35 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadeItem : MonoBehaviour {
+public class GrenadeItem : MonoBehaviour, IItem  {
     private bool _thrown = false;
-    public float ThrowingForce = 5.0f;
-    public float FuseTime = 4.0f;
-    private float _timer = 0;
-    private Rigidbody _body;
+    public float ThrowingVelocity = 5.0f;
+    private GameObject _throwingPlayer;
+    private GameObject _enemyPlayer;
+
     public bool Grab(Transform origin)
     {
-        transform.SetParent(origin);
-        transform.localPosition = Vector3.zero;
-        if (_body) _body.isKinematic = true;
-        return true;
+        _throwingPlayer = origin.root.gameObject;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        if (players[0] == _throwingPlayer) _enemyPlayer = players[1];
+        else _enemyPlayer = players[0];
+
+        if (_thrown)
+        {
+            ThrowingVelocity *= 1.2f;
+            return true;
+        }
+        else
+        {
+            transform.SetParent(origin);
+            transform.localPosition = Vector3.zero;
+            return true;
+        }
     }
 
     public bool Release()
     {
         _thrown = true;
-        if (_body)
-        {
-            _body.isKinematic = false;
-            _body.AddForce(transform.parent.forward * ThrowingForce);
-        }
+        transform.SetParent(null);
         return true;
-    }
-    // Use this for initialization
-    void Start()
-    {
-        _body = GetComponent<Rigidbody>();
-        if (_body != null) _body.isKinematic = true;
     }
 
     // Update is called once per frame
@@ -38,13 +41,19 @@ public class GrenadeItem : MonoBehaviour {
     {
         if (_thrown)
         {
-            _timer += Time.deltaTime;
-
-            if (_timer >= FuseTime)
-            {
-                ObjectController objCont = this.GetComponent<ObjectController>();
-                if (objCont != null) objCont.Destroy();
-            }
+            Vector3 dir = (_enemyPlayer.transform.position - transform.position).normalized;
         }   
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        GameObject rootObj = other.transform.root.gameObject;
+        if (rootObj.tag == "Player" && _thrown)
+        {
+            if (rootObj == _throwingPlayer) return; 
+            // explode                
+            ObjectController objCont = this.GetComponent<ObjectController>();
+            if (objCont != null) objCont.Destroy();
+        }
     }
 }
