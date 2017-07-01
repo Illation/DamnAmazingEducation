@@ -10,8 +10,6 @@ public class WallController : MonoBehaviour
     float WallWidth = 10;
     [SerializeField]
     float WallDepth = 10;
-    [SerializeField]
-    GameObject WallMesh;
 
     [Header("ThrusterSettings")]
     [SerializeField]
@@ -40,8 +38,6 @@ public class WallController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        WallMesh.transform.localScale = new Vector3(WallWidth, 1, WallDepth);
-
         float PosOffsetDelta = WallWidth / (NumThrusters);
 
         LeftThrusters = new List<Thruster>();

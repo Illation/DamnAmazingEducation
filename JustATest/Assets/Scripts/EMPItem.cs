@@ -9,17 +9,26 @@ public class EMPItem : MonoBehaviour, IItem
     private Vector3 _startingPoint;
     private WallController _wall;
     private bool _thrown;
+    private bool _attached;
     private Thruster _targetThruster;
     private int _ownerNum;
+    private float _timer;
+    public float ExplosionTime = 2.0f;
     public bool Grab(Transform origin)
     {
-        if (!_thrown){
+        if (!_thrown)
+        {
             _wall = GameObject.Find("Wall").GetComponent<WallController>();
             _throwingPlayer = origin.root.gameObject;
 
             transform.SetParent(origin);
             transform.localPosition = Vector3.zero;
             _ownerNum = (origin.gameObject.name == "Player 1" ? 1 : 2); //hacks
+            return true;
+        }
+        else if (_attached)
+        {
+            // do stuff
             return true;
         }
         else
@@ -30,25 +39,34 @@ public class EMPItem : MonoBehaviour, IItem
 
     public bool Release()
     {
-        _startingPoint = transform.position;
-        transform.SetParent(null);
         List<Thruster> thrusters;
         if (_ownerNum == 1)
         {
-            thrusters = _wall.RightThrusters;
+            thrusters = _wall.LeftThrusters;
         }
         else
         {
-            thrusters = _wall.LeftThrusters;
+            thrusters = _wall.RightThrusters;
         }
 
         foreach (Thruster t in thrusters)
         {
-            if (t.IsActivated && !t.isActiveAndEnabled)
+            if (t.IsLoaded)
             {
-
+                _targetThruster = t;
+                continue;
             }
         }
+
+        if (_targetThruster == null)
+        {
+            return false;
+        }
+
+
+        _startingPoint = transform.position;
+        transform.SetParent(null);
+
 
         _thrown = true;
         return true;
@@ -57,7 +75,15 @@ public class EMPItem : MonoBehaviour, IItem
     // Update is called once per frame
     void Update()
     {
+        if (_attached)
+        {
+            _timer += Time.deltaTime;
 
+            if (_timer > ExplosionTime)
+            {
+                Explode();
+            }
+        }
         if (_thrown)
         {
             Vector3 posSelf = transform.position;
@@ -68,6 +94,13 @@ public class EMPItem : MonoBehaviour, IItem
             posStart.y = 0;
 
             float distFromEnemy = (posThruster - posSelf).magnitude;
+
+            if (distFromEnemy < 0.5f)
+            {
+                AttachToThruster();
+                return;
+            }
+
             float maxDist = (posThruster - posStart).magnitude;
             float val = 1.0f - Mathf.Abs((maxDist - distFromEnemy) / maxDist * 2.0f - 1.0f);
             Vector3 dir = (posThruster - posSelf).normalized;
@@ -78,15 +111,15 @@ public class EMPItem : MonoBehaviour, IItem
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void AttachToThruster()
     {
-        GameObject rootObj = other.transform.root.gameObject;
-        if (rootObj.tag == "Player" && _thrown)
-        {
-            if (rootObj == _throwingPlayer) return;
-            // explode                
-            ObjectController objCont = this.GetComponent<ObjectController>();
-            if (objCont != null) objCont.Destroy();
-        }
+        _attached = true;
+    }
+
+    void Explode()
+    {
+        
+        ObjectController objCont = this.GetComponent<ObjectController>();
+        if (objCont != null) objCont.Destroy();
     }
 }
