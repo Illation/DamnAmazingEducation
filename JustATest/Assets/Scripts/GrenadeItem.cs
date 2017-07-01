@@ -66,8 +66,6 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
         if (_thrown)
         {
-            if (!_enemyPlayer.GetComponent<PlayerController>().alive) Explode();
-
             transform.Rotate(_spinDir * 10.0f);
             Vector3 posSelf = transform.position;
             posSelf.y = 0;
