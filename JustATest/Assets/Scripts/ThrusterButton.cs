@@ -26,9 +26,17 @@ public class ThrusterButton : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var thrusters = IsLeft ? _wall.LeftThrusters : _wall.RightThrusters;
+            bool allLoaded = true;
             foreach(var thruster in thrusters)
             {
-                thruster.Activate();
+                if (!(thruster.IsLoaded)) allLoaded = false;
+            }
+            if(allLoaded)
+            {
+                foreach(var thruster in thrusters)
+                {
+                    thruster.Activate();
+                }
             }
         }
     }
