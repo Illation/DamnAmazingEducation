@@ -5,7 +5,8 @@ using UnityEngine;
 public class FuelController : MonoBehaviour, IItem {
 
     private PlayerController owner = null;
-    private float interactionDistance = 4.0f; // Careful, this should be squared!
+    [SerializeField]
+    float interactionDistance = 6.0f; // Careful, this should be squared!
 
     public bool Grab(Transform origin) {
         transform.SetParent(origin);
