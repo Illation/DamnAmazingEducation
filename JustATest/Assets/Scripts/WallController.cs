@@ -27,6 +27,14 @@ public class WallController : MonoBehaviour
     float MovementDampener = 1;
     private float _movement = 0;
 
+    [Header("Upgrading")]
+    [SerializeField]
+    float UpgradeMultiplier = 10;
+    [SerializeField]
+    float UpgradeTime = 10;
+    private float _upgradeTimer = 0;
+    private uint _upgradeLevel = 0;
+
     [Header("EndGame")]
     [SerializeField]
     float FieldWidth;
@@ -69,10 +77,25 @@ public class WallController : MonoBehaviour
 
             wallForce -= RightThrusters[i].Thrust;
         }
-        _movement += wallForce * MovementMultiplier * Time.deltaTime;
+        float moveMult = MovementMultiplier + UpgradeMultiplier * _upgradeLevel * _upgradeLevel;
+
+        _movement += wallForce * moveMult * Time.deltaTime;
         _movement -= MovementDampener * _movement * Time.deltaTime;
 
         transform.position += new Vector3(0, 0, _movement) * Time.deltaTime;
+
+        //Upgrade Thrusters
+        _upgradeTimer += Time.deltaTime;
+        if(_upgradeTimer > UpgradeTime && _upgradeLevel <= 2)
+        {
+            _upgradeLevel++;
+            for (int i = 0; i < NumThrusters; i++)
+            {
+                LeftThrusters[i].UpgradeLevel = _upgradeLevel;
+                RightThrusters[i].UpgradeLevel = _upgradeLevel;
+            }
+            _upgradeTimer = 0;
+        }
 
         //end state
         if(transform.position.z > FieldWidth)
