@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
     public ParticleSystem[] trackParticles;
     public ParticleSystem smokeParticles;
     public GameObject spawn, exit, entry;
+    [HideInInspector]
+    public bool alive = true;
 
     // Private variables
     //private CharacterController _controller = null; // Reference to the character controller
@@ -30,7 +32,6 @@ public class PlayerController : MonoBehaviour {
     private bool _boostActive = false;
     private float _boostTimer = 0.0f;
     private float _movementSpeed; // How fast the player is moving
-    private bool _enabled = true;
     private float _respawnTimer = 0.0f;
 
     // Methods
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (!_enabled) {
+        if (!alive) {
             if (_respawnTimer > 0.0f) {
                 _respawnTimer -= Time.deltaTime;
                 if (_respawnTimer <= 0.0f) {
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour {
             }
             else {
                 transform.position = entry.transform.position;
-                _enabled = true;
+                alive = true;
                 GetComponent<Collider>().enabled = true;
             }
             return;
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour {
             foreach (Renderer rend in renderers) {
                 rend.enabled = false;
             }
-            _enabled = false;
+            alive = false;
             _respawnTimer = 1.0f;
             _smoking = false;
             trackParticles[0].Stop();
