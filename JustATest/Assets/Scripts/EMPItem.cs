@@ -113,6 +113,7 @@ public class EMPItem : MonoBehaviour, IItem
             if (distToPlayer < PickupRadius)
             {
                 // eat
+                _enemyPlayer.GetComponent<PlayerController>().SpeedBoost();
                 ObjectController objCont = this.GetComponent<ObjectController>();
                 if (objCont != null) objCont.Destroy();
                 return;
