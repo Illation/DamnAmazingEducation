@@ -7,6 +7,7 @@ public class Thruster : MonoBehaviour
 
     public float Thrust = 0;
     public bool IsLoaded = false;
+    public bool IsActivated = false;
 
     [SerializeField]
     private float ThrustDeceleration = 0.25f;
@@ -21,7 +22,7 @@ public class Thruster : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-		
+        IsLoaded = true;
 	}
 	
 	// Update is called once per frame
@@ -35,6 +36,8 @@ public class Thruster : MonoBehaviour
             {
                 _thrustDec = 0;
                 Thrust = 0;
+                IsActivated = false;
+                IsLoaded = false;
             }
         }
         ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust;
@@ -42,6 +45,15 @@ public class Thruster : MonoBehaviour
 
     public void Activate()
     {
-        Thrust = 1;
+        if((!IsActivated) && (IsLoaded))
+        {
+            Thrust = 1;
+            IsActivated = true;
+        }
+    }
+
+    public void Load()
+    {
+        IsLoaded = true;        
     }
 }
