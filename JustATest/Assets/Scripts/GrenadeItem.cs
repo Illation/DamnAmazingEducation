@@ -75,6 +75,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
             if (distFromEnemy < 0.5f)
             {
                 Explode();
+                _enemyPlayer.GetComponent<PlayerController>().Damage();
             }
 
             float maxDist = (posEnemy - posStart).magnitude;
