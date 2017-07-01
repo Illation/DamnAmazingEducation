@@ -21,6 +21,13 @@ public class Thruster : MonoBehaviour
     [SerializeField]
     GameObject FuelCell;
 
+    [SerializeField]
+    public uint UpgradeLevel = 0;
+    [SerializeField]
+    GameObject Upgrade1;
+    [SerializeField]
+    GameObject Upgrade2;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -45,6 +52,22 @@ public class Thruster : MonoBehaviour
             }
         }
         ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust;
+
+        switch (UpgradeLevel)
+        {
+            case 0:
+                Upgrade1.SetActive(false);
+                Upgrade2.SetActive(false);
+                break;
+            case 1:
+                Upgrade1.SetActive(true);
+                Upgrade2.SetActive(false);
+                break;
+            case 2:
+                Upgrade1.SetActive(true);
+                Upgrade2.SetActive(true);
+                break;
+        }
 	}
 
     public void Activate()
