@@ -9,7 +9,7 @@ public class Thruster : MonoBehaviour
     public bool IsLoaded = false;
     public bool IsActivated = false;
 
-    public bool IsHighlighted;
+    public bool IsHighlighted = false;
 
     [SerializeField]
     private float ThrustDeceleration = 0.25f;

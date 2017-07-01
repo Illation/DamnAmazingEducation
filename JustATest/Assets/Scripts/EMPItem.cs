@@ -42,6 +42,8 @@ public class EMPItem : MonoBehaviour, IItem
                 _thrusters = _wall.RightThrusters;
             }
 
+            _thrusters[0].IsHighlighted = true;
+
             return true;
         }
         else if (_attached)
@@ -75,10 +77,11 @@ public class EMPItem : MonoBehaviour, IItem
     {
         if (_selectingTarget)
         {
-            Debug.DrawRay(_thrusters[_thrusterID].transform.position, Vector3.forward * 5.0f);
             _selectionTimer += Time.deltaTime;
             if (_selectionTimer >= SelectionSwitchDelay)
             {
+                _thrusters[_thrusterID].IsHighlighted = false;
+
                 _selectionTimer = 0;
                 ++_thrusterID;
                 if (_thrusterID > _maxThrusterID)
@@ -86,7 +89,7 @@ public class EMPItem : MonoBehaviour, IItem
                     _thrusterID = 0;
                 }
 
-                _thrusters[_thrusterID]
+                _thrusters[_thrusterID].IsHighlighted = true;
             }
         }
 
