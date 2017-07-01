@@ -9,13 +9,11 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     private bool _paused = false;
     private GameObject _throwingPlayer;
     private GameObject _enemyPlayer;
-    private float _playerGrabRange = 0;
     private Vector3 _startingPoint;
 
     public bool Grab(Transform origin)
     {
         _throwingPlayer = origin.root.gameObject;
-        _playerGrabRange = _throwingPlayer.GetComponent<ItemHandler>().GrabDistance;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         if (players[0] == _throwingPlayer) _enemyPlayer = players[1];
@@ -67,6 +65,12 @@ public class GrenadeItem : MonoBehaviour, IItem  {
             posStart.y = 0;
 
             float distFromEnemy = (posEnemy - posSelf).magnitude;
+
+            if (distFromEnemy < 0.5f)
+            {
+                Explode();
+            }
+
             float maxDist = (posEnemy - posStart).magnitude;
             float val = 1.0f - Mathf.Abs((maxDist - distFromEnemy) / maxDist * 2.0f - 1.0f);
             Vector3 dir = (posEnemy - posSelf).normalized;
@@ -77,15 +81,9 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         }   
     }
 
-    void OnTriggerEnter(Collider other)
+    void Explode()
     {
-        GameObject rootObj = other.transform.root.gameObject;
-        if (rootObj.tag == "Player" && _thrown)
-        {
-            if (rootObj == _throwingPlayer) return; 
-            // explode                
-            ObjectController objCont = this.GetComponent<ObjectController>();
-            if (objCont != null) objCont.Destroy();
-        }
+        ObjectController objCont = this.GetComponent<ObjectController>();
+        if (objCont != null) objCont.Destroy();
     }
 }
