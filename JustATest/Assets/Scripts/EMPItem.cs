@@ -17,11 +17,20 @@ public class EMPItem : MonoBehaviour, IItem
     private int _ownerNum;
     private float _explosionTimer = 0;
     private float _selectionTimer = 0;
+    private float _destroyTimer = 0;
     public float SelectionSwitchDelay = 0.3f;
     public float ExplosionTime = 2.0f;
     private bool _selectingTarget = false;
     private int _thrusterID = 0;
     private int _maxThrusterID = 0;
+    private Projector _empLight;
+    private bool _destroy = false;
+
+    void Start()
+    {
+        _empLight = GetComponentInChildren<Projector>();
+        _empLight.enabled = false;
+    }
 
     public bool Grab(Transform origin)
     {
@@ -84,6 +93,18 @@ public class EMPItem : MonoBehaviour, IItem
     // Update is called once per frame
     void Update()
     {
+        if (_destroy)
+        {
+            _destroyTimer += Time.deltaTime;
+            _empLight.fieldOfView = 120.0f * (1.0f - (_destroyTimer / 0.2f));
+            if (_destroyTimer > 0.2f)
+            {
+                ObjectController objCont = this.GetComponent<ObjectController>();
+                if (objCont != null) objCont.Destroy();
+            }
+            return;
+        }
+
         if (_selectingTarget)
         {
             _selectionTimer += Time.deltaTime;
@@ -152,12 +173,12 @@ public class EMPItem : MonoBehaviour, IItem
     {
         _attached = true;
         _targetThruster.IsHighlighted = false;
+        _empLight.enabled = true;
     }
 
     void Explode()
     {
         _targetThruster.Discharge();
-        ObjectController objCont = this.GetComponent<ObjectController>();
-        if (objCont != null) objCont.Destroy();
+        _destroy = true;
     }
 }
