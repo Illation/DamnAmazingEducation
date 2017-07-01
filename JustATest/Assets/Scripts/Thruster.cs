@@ -16,7 +16,7 @@ public class Thruster : MonoBehaviour
     private float _thrustDec = 0;
 
     [SerializeField]
-    ParticleSystem ThrustParticles;
+    public ParticleSystem ThrustParticles;
     [SerializeField]
     float ThrustParticleLifetime = 2;
 

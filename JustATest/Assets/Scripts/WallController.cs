@@ -59,6 +59,7 @@ public class WallController : MonoBehaviour
             Vector3 scale = instance.transform.localScale;
             scale.z = -scale.z;
             instance.transform.localScale = scale;
+            instance.ThrustParticles.transform.rotation = Quaternion.Euler(0, 180, 0);
             LeftThrusters.Add(instance);
         }
 
