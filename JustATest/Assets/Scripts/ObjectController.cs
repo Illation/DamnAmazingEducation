@@ -11,7 +11,7 @@ public class ObjectController : MonoBehaviour {
         GameManagerObj = GameObject.FindObjectOfType<GameManager>();
     }
 	void Update () {
-        transform.position = Vector3.MoveTowards(transform.position, nextWaypoint.gameObject.transform.position, 0.01f * speed);
+        transform.position = Vector3.MoveTowards(transform.position, nextWaypoint.gameObject.transform.position, Time.deltaTime * speed);
         if (Vector3.SqrMagnitude(nextWaypoint.transform.position - transform.position) < Mathf.Epsilon)
         {
             if (nextWaypoint.nextWaypoint != null) nextWaypoint = nextWaypoint.nextWaypoint;
