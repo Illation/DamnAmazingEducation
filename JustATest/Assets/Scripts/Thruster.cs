@@ -56,7 +56,7 @@ public class Thruster : MonoBehaviour
                 FuelCell.SetActive(false);
             }
         }
-        ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust;
+        ThrustParticles.startLifetime = ThrustParticleLifetime * Thrust * (UpgradeLevel + 1);
 
         switch (UpgradeLevel)
         {
