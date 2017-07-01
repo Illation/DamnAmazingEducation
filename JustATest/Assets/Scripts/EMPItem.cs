@@ -31,15 +31,15 @@ public class EMPItem : MonoBehaviour, IItem
 
             transform.SetParent(origin);
             transform.localPosition = Vector3.zero;
-            int ownerNum = (origin.gameObject.name == "Player 1" ? 1 : 2); //hacks
+            int ownerNum = (origin.transform.root.gameObject.name == "Player 1" ? 1 : 2); //hacks
 
             if (ownerNum == 1)
             {
-                _thrusters = _wall.LeftThrusters;
+                _thrusters = _wall.RightThrusters;
             }
             else
             {
-                _thrusters = _wall.RightThrusters;
+                _thrusters = _wall.LeftThrusters;
             }
 
             _thrusters[0].IsHighlighted = true;
@@ -137,6 +137,7 @@ public class EMPItem : MonoBehaviour, IItem
     void Explode()
     {
         _targetThruster.Discharge();
+        _targetThruster.IsHighlighted = false;
         ObjectController objCont = this.GetComponent<ObjectController>();
         if (objCont != null) objCont.Destroy();
     }
