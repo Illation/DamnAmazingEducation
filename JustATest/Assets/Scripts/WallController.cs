@@ -24,12 +24,18 @@ public class WallController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField]
-    float FieldWidth;
-    [SerializeField]
     float MovementMultiplier = 1;
     [SerializeField]
     float MovementDampener = 1;
     private float _movement = 0;
+
+    [Header("EndGame")]
+    [SerializeField]
+    float FieldWidth;
+    [SerializeField]
+    Explosion ExplosionPrefab;
+    public bool LeftWon = false;
+    public bool RightWon = false;
 
 	// Use this for initialization
 	void Start ()
@@ -76,10 +82,27 @@ public class WallController : MonoBehaviour
         if(transform.position.z > FieldWidth)
         {
             //left player wins
+            LeftWon = true;
         }
         else if(transform.position.z < -FieldWidth)
         {
             //right player wins
+            RightWon = true;
+        }
+
+        if(LeftWon)
+        {
+            foreach(var thruster in RightThrusters)
+            {
+                Instantiate(ExplosionPrefab, thruster.transform.position, Quaternion.identity);
+            }
+        }
+        else if(RightWon)
+        {
+            foreach(var thruster in LeftThrusters)
+            {
+                Instantiate(ExplosionPrefab, thruster.transform.position, Quaternion.identity);
+            }
         }
 	}
 }
