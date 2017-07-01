@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour {
     //    _controller.Move(_moveDirection * Time.deltaTime);
     //}
 
+
     void HandleMovement() {
         if (!playerTwo) _moveDirection = Input.GetAxisRaw("Vertical") * cam.transform.forward + Input.GetAxisRaw("Horizontal") * cam.transform.right;
         else _moveDirection = Input.GetAxisRaw("Vertical 2") * cam.transform.forward + Input.GetAxisRaw("Horizontal 2") * cam.transform.right;
