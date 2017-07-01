@@ -33,10 +33,16 @@ public class ItemHandler : MonoBehaviour {
                 if (items.Length > 0)
                 {
                     int closestIndex = 0;
-                    float minLen = (GrabOrigin.position - items[0].transform.position).sqrMagnitude;
+                    Vector3 originPos = GrabOrigin.position;
+                    originPos.y = 0;
+                    Vector3 itemPos = items[0].transform.position;
+                    itemPos.y = 0;
+                    float minLen = (originPos - itemPos).sqrMagnitude;
                     for (int i = 1; i < items.Length; i++)
                     {
-                        float currLen = (GrabOrigin.position - items[i].transform.position).sqrMagnitude;
+                        itemPos = items[i].transform.position;
+                        itemPos.y = 0;
+                        float currLen = (originPos - itemPos).sqrMagnitude;
                         if (currLen < minLen)
                         {
                             minLen = currLen;
