@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SpawnerController.cs" />
     <Compile Include="Assets\Scripts\Thruster.cs" />
+    <Compile Include="Assets\Scripts\ThrusterButton.cs" />
     <Compile Include="Assets\Scripts\WallController.cs" />
     <Compile Include="Assets\Scripts\Waypoint.cs" />
   </ItemGroup>
