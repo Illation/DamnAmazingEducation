@@ -61,4 +61,13 @@ public class Thruster : MonoBehaviour
         IsLoaded = true;
         FuelCell.SetActive(true);
     }
+
+    public void Discharge()
+    {
+        _thrustDec = 0;
+        Thrust = 0;
+        IsActivated = false;
+        IsLoaded = false;
+        FuelCell.SetActive(false);
+    }
 }
