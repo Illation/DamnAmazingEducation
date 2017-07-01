@@ -85,6 +85,8 @@ public class EMPItem : MonoBehaviour, IItem
                 {
                     _thrusterID = 0;
                 }
+
+                _thrusters[_thrusterID]
             }
         }
 
