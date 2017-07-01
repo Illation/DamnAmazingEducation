@@ -12,10 +12,9 @@ public class TextureOffsetController : MonoBehaviour {
     void Start() {
         _rend = GetComponent<Renderer>();
     }
-
+       
 	void Update () {
         if (!active) return;
-        Debug.Log(_offset);
         _offset += new Vector2(xOffsetSpeed, yOffsetSpeed);
         _rend.material.SetTextureOffset("_MainTex", _offset);
 	}
