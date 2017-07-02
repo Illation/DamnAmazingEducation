@@ -75,6 +75,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Arrow.cs" />
+    <Compile Include="Assets\GlobalSoundManager.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\EMPItem.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\FuelController.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="Assets\Scripts\GrenadeItem.cs" />
     <Compile Include="Assets\Scripts\IItem.cs" />
     <Compile Include="Assets\Scripts\ItemHandler.cs" />
+    <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\ObjectController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SpawnerController.cs" />
@@ -136,6 +140,7 @@
     <Compile Include="Assets\Scripts\ThrusterButton.cs" />
     <Compile Include="Assets\Scripts\WallController.cs" />
     <Compile Include="Assets\Scripts\Waypoint.cs" />
+    <Compile Include="Assets\SpriteBillboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
