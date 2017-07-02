@@ -46,9 +46,10 @@ public class GlobalSoundManager : MonoBehaviour
     [SerializeField]
     AudioSource SourceRight;
     [SerializeField]
+    AudioSource SourceCenter;
+    [SerializeField]
     float SideSourceDistance = 0.4f;
 
-    private AudioSource _sourceCenter;
 
     [Header("Music")]
     [SerializeField]
@@ -94,8 +95,6 @@ public class GlobalSoundManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        _sourceCenter = new AudioSource();
-
         _sourceMusic = GetComponent<AudioSource>();
         _sourceMusic.clip = Music;
         _sourceMusic.loop = true;
@@ -121,7 +120,7 @@ public class GlobalSoundManager : MonoBehaviour
             case SourcePosition.Right:
                 return SourceRight;
             case SourcePosition.Center:
-                return _sourceCenter;
+                return SourceCenter;
         }
         return null;
     }
