@@ -36,6 +36,7 @@ public class EMPItem : MonoBehaviour, IItem
     {
         if (!_thrown)
         {
+            GlobalSoundManager.instance.PlayClip(GlobalSounds.PickUpEmpGrenade, SourcePosition.Center, 1);
             _selectingTarget = true;
             _wall = GameObject.Find("Wall").GetComponent<WallController>();
             _maxThrusterID = _wall.LeftThrusters.Count - 1;
@@ -79,6 +80,11 @@ public class EMPItem : MonoBehaviour, IItem
     {
         if (!_thrown)
         {
+            GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpThrow,
+                SourcePosition.Center, 1);
+                //_ownerNum == 1?SourcePosition.Left : SourcePosition.Right, 1);
+            //GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpLockTarget, 
+            //    _ownerNum == 1?SourcePosition.Right : SourcePosition.Left, 1);
             _targetThruster = _thrusters[_thrusterID];
             _targetPos = _targetThruster.transform.Find("EMPanchor").position;
             transform.SetParent(null);
@@ -120,6 +126,7 @@ public class EMPItem : MonoBehaviour, IItem
                 }
 
                 _thrusters[_thrusterID].IsHighlighted = true;
+                GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpScrollTarget, SourcePosition.Center, 1);
             }
         }
 
@@ -169,6 +176,7 @@ public class EMPItem : MonoBehaviour, IItem
 
     void AttachToThruster()
     {
+        GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpCharge, SourcePosition.Center, 1);
         _attached = true;
         _targetThruster.IsHighlighted = false;
         _empLight.enabled = true;
@@ -176,6 +184,7 @@ public class EMPItem : MonoBehaviour, IItem
 
     void Explode()
     {
+        GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpExplode, SourcePosition.Center, 1);
         _targetThruster.Discharge();
         _destroy = true;
     }

@@ -26,6 +26,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
         if (_thrown)
         {
+            GlobalSoundManager.instance.PlayClip(GlobalSounds.DeflectGrenade, SourcePosition.Center, 1);
             _startingPoint = transform.position;
             _spinDir = -_spinDir;
             _pauseTime = Time.realtimeSinceStartup;
@@ -36,6 +37,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         }
         else
         {
+            GlobalSoundManager.instance.PlayClip(GlobalSounds.PickUpEmpGrenade, SourcePosition.Center, 1);
             _spinDir = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
             _startY = transform.position.y;
             transform.SetParent(origin);
@@ -45,6 +47,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     }
     public bool Release()
     {
+        GlobalSoundManager.instance.PlayClip(GlobalSounds.GrenadeThrow, SourcePosition.Center, 1);
         if (!_enemyPlayer.GetComponent<PlayerController>().alive) return false;
         _startingPoint = transform.position;
         _thrown = true;
@@ -101,5 +104,6 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
         ObjectController objCont = this.GetComponent<ObjectController>();
         if (objCont != null) objCont.Destroy();
+        GlobalSoundManager.instance.PlayClip(GlobalSounds.GrenadeExplode, SourcePosition.Center, 1);
     }
 }
