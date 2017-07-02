@@ -105,7 +105,7 @@ public class EMPItem : MonoBehaviour, IItem
             return;
         }
 
-        if (_selectingTarget)
+        if (_selectingTarget)   
         {
             _selectionTimer += Time.deltaTime;
             if (_selectionTimer >= SelectionSwitchDelay)
@@ -134,9 +134,7 @@ public class EMPItem : MonoBehaviour, IItem
             if (distToPlayer < PickupRadius)
             {
                 // eat
-                _enemyPlayer.GetComponent<PlayerController>().SpeedBoost();
-                ObjectController objCont = this.GetComponent<ObjectController>();
-                if (objCont != null) objCont.Destroy();
+                BoostPlayer();
                 return;
             }
 
@@ -179,6 +177,12 @@ public class EMPItem : MonoBehaviour, IItem
     void Explode()
     {
         _targetThruster.Discharge();
+        _destroy = true;
+    }
+
+    void BoostPlayer()
+    {
+        _enemyPlayer.GetComponent<PlayerController>().SpeedBoost();
         _destroy = true;
     }
 }

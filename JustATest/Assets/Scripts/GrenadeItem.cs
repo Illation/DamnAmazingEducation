@@ -94,6 +94,10 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
     void Explode()
     {
+        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        CameraController camC = null;
+        if (cam) camC = cam.GetComponent<CameraController>();
+        if (camC) camC.AddScreenShake(10.0f, 2.0f, 0.5f, true);
         Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
         ObjectController objCont = this.GetComponent<ObjectController>();
         if (objCont != null) objCont.Destroy();
