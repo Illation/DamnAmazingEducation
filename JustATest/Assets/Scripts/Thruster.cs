@@ -7,7 +7,7 @@ public class Thruster : MonoBehaviour
     public float Thrust = 0;
     public bool IsLoaded = false;
     public bool IsActivated = false;
-
+    public bool FuelInRange = false;
     public bool IsHighlighted = false;
 
     [SerializeField]
@@ -101,5 +101,21 @@ public class Thruster : MonoBehaviour
         FuelCell.SetActive(false);
         //ElectricityParticles.Simulate(0, true, true);
         //ElectricityParticles.Play();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.name.Contains("Fuel Item"))
+        {
+            FuelInRange = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.name.Contains("Fuel Item"))
+        {
+            FuelInRange = false;
+        }
     }
 }

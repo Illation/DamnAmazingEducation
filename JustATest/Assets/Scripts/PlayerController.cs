@@ -101,6 +101,11 @@ public class PlayerController : MonoBehaviour {
             trackParticles[1].Stop();
         }
         _body.angularVelocity = Vector3.zero;
+
+        //Sounds
+        float pitch = _boostActive ? 2 : 1;
+        float volume = (_body.velocity.magnitude / (_boostActive ? boostSpeed : normalSpeed)) * 4;
+        GlobalSoundManager.instance.SetPlayerVolumePitch(!playerTwo, volume, pitch);
     }
 
     public void Damage() {
