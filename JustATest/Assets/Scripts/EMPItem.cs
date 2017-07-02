@@ -195,6 +195,7 @@ public class EMPItem : MonoBehaviour, IItem
     void Explode()
     {
         _billboard.SetActive(false);
+        _mesh.SetActive(false);
         GlobalSoundManager.instance.PlayStopEmp(false);
         GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpExplode, SourcePosition.Center, 1);
         _camController.AddScreenShake(3.0f, 5.0f, 0.2f, true);
