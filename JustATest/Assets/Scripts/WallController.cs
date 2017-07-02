@@ -89,7 +89,9 @@ public class WallController : MonoBehaviour
 	
 	void Update ()
     {
-        if (UpgradeTimer < 1.0f) floorAnimator.ActivateUpgradeAnimation();
+        if (UpgradeTimer < 1.5f) {
+            if (!floorAnimator.active) floorAnimator.ActivateUpgradeAnimation();
+        }
         //Move Wall
         float leftVolume = 0;
         float rightVolume = 0;
@@ -139,9 +141,10 @@ public class WallController : MonoBehaviour
             }
             _upgradeTimer = 0;
         }
+        else if (_upgradeLevel > 2) _upgradeTimer = 0;
 
         //end state
-        if(transform.position.z > FieldWidth)
+        if (transform.position.z > FieldWidth)
         {
             //left player wins
             LeftWon = true;
