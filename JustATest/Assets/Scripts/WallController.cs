@@ -119,6 +119,14 @@ public class WallController : MonoBehaviour
                 Instantiate(UpgradePrefab, LeftThrusters[i].transform.position-new Vector3(0, 0, 1), Quaternion.identity);
                 RightThrusters[i].UpgradeLevel = _upgradeLevel;
                 Instantiate(UpgradePrefab, RightThrusters[i].transform.position + new Vector3(0, 0, 1), Quaternion.identity);
+                if(_upgradeLevel == 1)
+                {
+                    GlobalSoundManager.instance.PlayClip(GlobalSounds.Thruster1, SourcePosition.Center, 1);
+                }
+                else if(_upgradeLevel == 2)
+                {
+                    GlobalSoundManager.instance.PlayClip(GlobalSounds.Thruster2, SourcePosition.Center, 1);
+                }
             }
             _upgradeTimer = 0;
         }

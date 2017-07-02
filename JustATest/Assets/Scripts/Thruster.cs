@@ -15,7 +15,7 @@ public class Thruster : MonoBehaviour
     private float _thrustDec = 0;
 
     [SerializeField]
-    public ParticleSystem ThrustParticles;//, ElectricityParticles;
+    public ParticleSystem ThrustParticles, FuelLoadingParticle;
     [SerializeField]
     float ThrustParticleLifetime = 2;
 
@@ -44,7 +44,8 @@ public class Thruster : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(Thrust > 0)
+        FuelHighlight.SetActive(FuelHighlightEnabled);
+        if (Thrust > 0)
         {
             _thrustDec += ThrustDeceleration*Time.deltaTime;
             Thrust -= _thrustDec * Time.deltaTime;
@@ -91,6 +92,7 @@ public class Thruster : MonoBehaviour
     public void Load()
     {
         IsLoaded = true;
+        FuelLoadingParticle.Play();
         FuelCell.SetActive(true);
     }
 

@@ -26,7 +26,10 @@ public enum GlobalSounds
 
     UI1,
     UI2,
-    UI3
+    UI3,
+
+    Thruster1,
+    Thruster2
 }
 
 public enum SourcePosition
@@ -93,6 +96,9 @@ public class GlobalSoundManager : MonoBehaviour
     [SerializeField] AudioClip UI1;
     [SerializeField] AudioClip UI2;
     [SerializeField] AudioClip UI3; 
+    [Header("Thruster Upgrades")]
+    [SerializeField] AudioClip Thruster1;
+    [SerializeField] AudioClip Thruster2;
 
     //
     void Awake() {
@@ -205,6 +211,10 @@ public class GlobalSoundManager : MonoBehaviour
                 return UI2;
             case GlobalSounds.UI3:
                 return UI3;
+            case GlobalSounds.Thruster1:
+                return Thruster1;
+            case GlobalSounds.Thruster2:
+                return Thruster2;
         }
         return null;
     }
