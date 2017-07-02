@@ -44,7 +44,8 @@ public class Thruster : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(Thrust > 0)
+        FuelHighlight.SetActive(FuelHighlightEnabled);
+        if (Thrust > 0)
         {
             _thrustDec += ThrustDeceleration*Time.deltaTime;
             Thrust -= _thrustDec * Time.deltaTime;
