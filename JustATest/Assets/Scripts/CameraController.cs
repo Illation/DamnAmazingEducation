@@ -17,6 +17,8 @@ public class CameraController : MonoBehaviour {
     }
 
     private Vector3 _basePos;
+    private Vector3 _targetOffset;
+    private Vector3 _currentOffset;
     private List<ScreenShakeData> _shakeQueue;
     // Update is called once per frame
     void Start()
@@ -26,6 +28,22 @@ public class CameraController : MonoBehaviour {
     }
 
 	void Update () {
+        transform.position = _basePos;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Vector2 avg = Vector3.zero;
+        for (int i = 0; i < players.Length; i++)
+        {
+            avg += new Vector2(players[i].transform.position.z, players[i].transform.position.x);
+        }
+        avg /= players.Length;
+        avg /= 2.0f;
+
+        float zVal = (players[0].transform.position - players[1].transform.position).magnitude;
+        zVal /= 5.0f;
+        _targetOffset = new Vector3(avg.x, -avg.y, -zVal + 5.0f);
+        _currentOffset = (_targetOffset - _currentOffset) / 2.0f;
+        transform.Translate(_currentOffset);
+
         for (int i = 0; i < _shakeQueue.Count; ++i)
         {
             ScreenShakeData data = _shakeQueue[i];
@@ -55,7 +73,6 @@ public class CameraController : MonoBehaviour {
 
             _shakeQueue[i] = data;
 
-            transform.position = _basePos;
             Vector3 t = new Vector3(data.Offset.x, data.Offset.y, 0);
             transform.Translate(t);
         }
@@ -75,7 +92,7 @@ public class CameraController : MonoBehaviour {
         {
             if ((transform.position - _basePos).magnitude > 0.05f)
             {
-                transform.Translate(((_basePos - transform.position) / 2.0f) * Time.deltaTime * 20.0f, Space.World);
+                transform.Translate(((_basePos - transform.position) / 2.0f) * Time.deltaTime * 5.0f, Space.World);
             }
         }
     }
