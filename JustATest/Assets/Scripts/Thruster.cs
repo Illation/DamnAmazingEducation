@@ -9,7 +9,7 @@ public class Thruster : MonoBehaviour
     public bool IsActivated = false;
     public bool FuelInRange = false;
     public bool IsHighlighted = false;
-
+    public bool FuelHighlightEnabled = false;
     [SerializeField]
     private float ThrustDeceleration = 0.25f;
     private float _thrustDec = 0;
@@ -31,9 +31,10 @@ public class Thruster : MonoBehaviour
 
     [SerializeField]
     GameObject Highlight;
-
-	// Use this for initialization
-	void Start ()
+    [SerializeField]
+    GameObject FuelHighlight;
+    // Use this for initialization
+    void Start ()
     {
         IsLoaded = false;
         FuelCell.SetActive(false);
@@ -75,7 +76,8 @@ public class Thruster : MonoBehaviour
         }
 
         Highlight.SetActive(IsHighlighted);
-	}
+        FuelHighlight.SetActive(FuelHighlightEnabled);
+    }
 
     public void Activate()
     {
