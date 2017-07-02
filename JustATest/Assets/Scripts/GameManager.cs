@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public WallController wall;
     public GameObject GameQuitPanel, GameOverPanel;
-    
+    public GameObject DestroyParticles;
+
     [SerializeField]
     public bool GameOver = true;
 
