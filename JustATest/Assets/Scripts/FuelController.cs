@@ -19,7 +19,7 @@ public class FuelController : MonoBehaviour, IItem {
     public bool Release() {
         Thruster closestThruster = FindClosestThruster();
         Debug.Log("Trying to load " + closestThruster);
-        if (closestThruster != null && (closestThruster.transform.position - transform.position).sqrMagnitude <= interactionDistance && !closestThruster.IsLoaded) {
+        if (closestThruster != null && closestThruster.FuelInRange && !closestThruster.IsLoaded) {
             Debug.Log("Loading " + closestThruster);
             closestThruster.Load();
             GameManager.instance.DestroyObject(this.GetComponent<ObjectController>());
