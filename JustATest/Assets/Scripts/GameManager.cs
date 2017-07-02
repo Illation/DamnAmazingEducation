@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
 
 
@@ -11,10 +12,13 @@ public class GameManager : MonoBehaviour {
     public uint maxObjects = 10;
     [HideInInspector]
     public WallController wall;
-
+    public PostProcessingProfile profile;
+    public GameObject GameQuitPanel, GameOverPanel;
+    
     [SerializeField]
-    Canvas GameOverUI;
     public bool GameOver = true;
+
+    private bool quittingGame = false;
 
     void Awake() {
         if (instance == null)
@@ -22,34 +26,40 @@ public class GameManager : MonoBehaviour {
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
         wall = GameObject.Find("Wall").GetComponent<WallController>();
-
-        GameOverUI = GameObject.Find("EndGameUI").GetComponent<Canvas>();
-
-        GameOverUI.gameObject.SetActive(false);
+        GameQuitPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
     }
 
     private void Update()
     {
-        wall = GameObject.Find("Wall").GetComponent<WallController>();
-        if(!GameOverUI)
-        {
-            GameOverUI = GameObject.Find("EndGameUI").GetComponent<Canvas>();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start")) {
+            if (quittingGame) CancelQuit();
+            else QuitGame();
         }
+        else if (quittingGame) {
+            if (Input.GetButtonDown("Select")) {
+                profile.colorGrading.enabled = false;
+                SceneManager.LoadScene(0);
+            }
+            else if (Input.GetButtonDown("Back")) CancelQuit();
+        }
+
+        wall = GameObject.Find("Wall").GetComponent<WallController>();
+
         if(wall.LeftWon || wall.RightWon)
         {
-            //Open UI
             GameOver = true;
-            GameOverUI.gameObject.SetActive(true);
+            GameOverPanel.SetActive(true);
         }
         else
         {
-            GameOverUI.gameObject.SetActive(false);
+            GameOverPanel.SetActive(false);
         }
     }
 
@@ -58,6 +68,7 @@ public class GameManager : MonoBehaviour {
         wall.LeftWon = false;
         wall.RightWon = false;
         objects.Clear();
+        profile.colorGrading.enabled = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -65,5 +76,17 @@ public class GameManager : MonoBehaviour {
     {
         objects.Remove(obj);
         Destroy(obj.gameObject);
+    }
+
+    private void QuitGame() {
+        quittingGame = true;
+        profile.colorGrading.enabled = true;
+        GameQuitPanel.SetActive(true);
+    }
+
+    private void CancelQuit() {
+        quittingGame = false;
+        profile.colorGrading.enabled = false;
+        GameQuitPanel.SetActive(false);
     }
 }
