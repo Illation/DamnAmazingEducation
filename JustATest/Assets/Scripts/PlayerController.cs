@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour {
     private float _movementSpeed; // How fast the player is moving
     private float _respawnTimer = 0.0f;
 
+    public float ArmHeight = 0;
+    [SerializeField]
+    float RespawnHeightMultiplier = 5;
+
     // Methods
     // -------
 
@@ -46,22 +50,18 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
+        _respawnTimer -= Time.deltaTime;
         if (!alive) {
-            if (_respawnTimer > 0.0f) {
-                _respawnTimer -= Time.deltaTime;
+            if (_respawnTimer > 0.0f)
+            {
+                ArmHeight = Mathf.Abs(_respawnTimer)* Mathf.Abs(_respawnTimer) * RespawnHeightMultiplier;
+                transform.position = spawn.transform.position+new Vector3(0, ArmHeight, 0);
+
                 if (_respawnTimer <= 0.0f) {
-                    Renderer[] renderers = transform.root.gameObject.GetComponentsInChildren<Renderer>();
-                    foreach (Renderer rend in renderers) {
-                        rend.enabled = true;
-                    }
                     smokeParticles.Clear();
                 }
             }
-            //else if ((transform.position - exit.transform.position).sqrMagnitude > 0.5f) {
-            //    transform.position = Vector3.MoveTowards(transform.position, exit.transform.position, 0.1f);
-            //}
             else {
-                //transform.position = entry.transform.position;
                 alive = true;
                 GetComponent<Collider>().enabled = true;
             }
@@ -130,10 +130,6 @@ public class PlayerController : MonoBehaviour {
             smokeParticles.Play();
         }
         else {
-            Renderer[] renderers = transform.root.gameObject.GetComponentsInChildren<Renderer>();
-            foreach (Renderer rend in renderers) {
-                rend.enabled = false;
-            }
             alive = false;
             _respawnTimer = 1.5f;
             _smoking = false;
