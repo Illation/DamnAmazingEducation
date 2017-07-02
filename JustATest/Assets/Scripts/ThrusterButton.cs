@@ -12,6 +12,7 @@ public class ThrusterButton : MonoBehaviour
     [SerializeField]
     GameObject Projector;
     float _projectorRotation;
+    public FloorAnimator floorAnimator;
 
     [SerializeField]
     GameObject TextMesh;
@@ -65,6 +66,7 @@ public class ThrusterButton : MonoBehaviour
             }
             if (allLoaded)
             {
+                floorAnimator.ActivateWallMovingAnimation(true);
                 foreach (var thruster in thrusters)
                 {
                     thruster.Activate();
