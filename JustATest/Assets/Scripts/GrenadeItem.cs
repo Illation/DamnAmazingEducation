@@ -79,7 +79,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
 
             float distFromEnemy = (posEnemy - posSelf).magnitude;
 
-            if (distFromEnemy < 6.0f)
+            if (distFromEnemy < 6.0f && !_enemyPlayer.GetComponent<ItemHandler>().HoldingItem())
             {
                 _enemyPlayer.GetComponent<ItemHandler>().EnableButtonPrompt();
             }

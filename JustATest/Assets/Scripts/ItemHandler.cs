@@ -9,6 +9,7 @@ public class ItemHandler : MonoBehaviour {
     public float GrabDistance = 2.0f;
     private Transform _transSelf;
     private GameObject _activeItem;
+    public bool HoldingItem() { return _activeItem != null; }
     private bool _pickupKeyDown = false;
     private string _pickupAxis = "";
     public GameObject _buttonPrompt;
