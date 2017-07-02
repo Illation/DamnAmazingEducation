@@ -26,11 +26,16 @@ public class EMPItem : MonoBehaviour, IItem
     private Projector _empLight;
     private bool _destroy = false;
     private CameraController _camController;
+    [SerializeField]
+    private GameObject _billboard;
+    [SerializeField]
+    private GameObject _mesh;
     void Start()
     {
         _empLight = GetComponentInChildren<Projector>();
         _empLight.enabled = false;
         _camController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
+        _billboard.SetActive(false);
     }
 
     public bool Grab(Transform origin)
@@ -100,6 +105,7 @@ public class EMPItem : MonoBehaviour, IItem
     // Update is called once per frame
     void Update()
     {
+        _billboard.transform.rotation = Quaternion.Euler(60, -100, 10);
         if (_destroy)
         {
             _destroyTimer += Time.deltaTime;
@@ -174,12 +180,13 @@ public class EMPItem : MonoBehaviour, IItem
             transform.position += dir * ThrowingVelocity * Time.deltaTime;
         }
 
-        transform.Rotate(new Vector3(0, _explosionTimer * 20.0f, 0));
+        _mesh.transform.Rotate(new Vector3(0, _explosionTimer * 20.0f, 0));
     }
 
     void AttachToThruster()
     {
         GlobalSoundManager.instance.PlayStopEmp(true);
+        _billboard.SetActive(true);
         _attached = true;
         _targetThruster.IsHighlighted = false;
         _empLight.enabled = true;
@@ -187,6 +194,7 @@ public class EMPItem : MonoBehaviour, IItem
 
     void Explode()
     {
+        _billboard.SetActive(false);
         GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpExplode, SourcePosition.Center, 1);
         _camController.AddScreenShake(3.0f, 5.0f, 0.2f, true);
         _targetThruster.Discharge();
