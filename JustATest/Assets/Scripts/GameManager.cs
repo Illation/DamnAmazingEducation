@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
-
 
 public class GameManager : MonoBehaviour {
 
@@ -12,7 +11,6 @@ public class GameManager : MonoBehaviour {
     public uint maxObjects = 10;
     [HideInInspector]
     public WallController wall;
-    public PostProcessingProfile profile;
     public GameObject GameQuitPanel, GameOverPanel;
     
     [SerializeField]
@@ -43,8 +41,7 @@ public class GameManager : MonoBehaviour {
             else QuitGame();
         }
         else if (quittingGame) {
-            if (Input.GetButtonDown("Select")) {
-                profile.colorGrading.enabled = false;
+            if (Input.GetButtonDown("Select") || Input.GetKeyDown(KeyCode.Return)) {
                 SceneManager.LoadScene(0);
             }
             else if (Input.GetButtonDown("Back")) CancelQuit();
@@ -56,6 +53,7 @@ public class GameManager : MonoBehaviour {
         {
             GameOver = true;
             GameOverPanel.SetActive(true);
+            StartCoroutine(DelayedQuit());
         }
         else
         {
@@ -68,7 +66,6 @@ public class GameManager : MonoBehaviour {
         wall.LeftWon = false;
         wall.RightWon = false;
         objects.Clear();
-        profile.colorGrading.enabled = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -80,13 +77,16 @@ public class GameManager : MonoBehaviour {
 
     private void QuitGame() {
         quittingGame = true;
-        profile.colorGrading.enabled = true;
         GameQuitPanel.SetActive(true);
     }
 
     private void CancelQuit() {
         quittingGame = false;
-        profile.colorGrading.enabled = false;
         GameQuitPanel.SetActive(false);
+    }
+
+    IEnumerator DelayedQuit() {
+        yield return new WaitForSeconds(2.0f);
+        SceneManager.LoadScene(0);
     }
 }
