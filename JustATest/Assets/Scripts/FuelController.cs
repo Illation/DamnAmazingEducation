@@ -8,23 +8,24 @@ public class FuelController : MonoBehaviour, IItem {
     [SerializeField]
     float interactionDistance = 6.0f; // Careful, this should be squared!
     private List<Thruster> _thrusters;
-
+    private bool _grabbed = false;
     public bool Grab(Transform origin) {
         transform.SetParent(origin);
         transform.localPosition = Vector3.zero;
         owner = origin.root.GetComponent<PlayerController>();
         _thrusters = owner.playerTwo ? GameManager.instance.wall.RightThrusters : GameManager.instance.wall.LeftThrusters;
-
-        foreach (Thruster t in _thrusters)
-        {
-            if (!t.IsLoaded)
-            {
-                t.FuelHighlightEnabled = true;
-            }
-        }
-
+        _grabbed = true;
         GlobalSoundManager.instance.PlayClip(GlobalSounds.PickUpFuel, SourcePosition.Center, 1);
         return true;
+    }
+
+    void Update()
+    {
+        if (!_grabbed) return;
+        foreach (Thruster t in _thrusters)
+        {
+            t.FuelHighlightEnabled = !t.IsLoaded;
+        }
     }
 
     public bool Release() {

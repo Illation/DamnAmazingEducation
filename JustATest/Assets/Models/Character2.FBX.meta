@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: a2173042688f6834d8564c52bea34b04
-timeCreated: 1498992942
+guid: 80023510de37f6348ad4a1b9193eeeec
+timeCreated: 1498997298
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CharacterTracks001
+    100004: Object002
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Plane003
-    7400000: Take 001
+    400002: CharacterTracks001
+    400004: Object002
+    2300000: CharacterTracks001
+    2300002: Object002
+    3300000: CharacterTracks001
+    3300002: Object002
+    4300000: CharacterTracks001
+    4300002: Object002
     9500000: //RootNode
   materials:
     importMaterials: 1
