@@ -32,6 +32,7 @@ public class WallController : MonoBehaviour
     float UpgradeMultiplier = 10;
     [SerializeField]
     float UpgradeTime = 10;
+    public FloorAnimator floorAnimator;
     private float _upgradeTimer = 0;
     public float UpgradeTimer
     {
@@ -88,6 +89,9 @@ public class WallController : MonoBehaviour
 	
 	void Update ()
     {
+        if (UpgradeTimer < 1.5f) {
+            if (!floorAnimator.active) floorAnimator.ActivateUpgradeAnimation();
+        }
         //Move Wall
         float leftVolume = 0;
         float rightVolume = 0;
@@ -137,9 +141,10 @@ public class WallController : MonoBehaviour
             }
             _upgradeTimer = 0;
         }
+        else if (_upgradeLevel > 2) _upgradeTimer = 0;
 
         //end state
-        if(transform.position.z > FieldWidth)
+        if (transform.position.z > FieldWidth)
         {
             //left player wins
             LeftWon = true;
