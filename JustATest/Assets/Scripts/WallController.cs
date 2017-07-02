@@ -33,6 +33,13 @@ public class WallController : MonoBehaviour
     [SerializeField]
     float UpgradeTime = 10;
     private float _upgradeTimer = 0;
+    public float UpgradeTimer
+    {
+        get
+        {
+            return UpgradeTime - _upgradeTimer;
+        }
+    }
     private uint _upgradeLevel = 0;
     [SerializeField]
     GameObject UpgradePrefab;

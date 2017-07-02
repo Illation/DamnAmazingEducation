@@ -22,6 +22,7 @@ ModelImporter:
     100028: Floor
     100030: FloorLeft
     100032: FloorRight
+    100034: FloorRims
     400000: Box002
     400002: //RootNode
     400004: Plane001
@@ -39,6 +40,7 @@ ModelImporter:
     400028: Floor
     400030: FloorLeft
     400032: FloorRight
+    400034: FloorRims
     2300000: Box002
     2300002: Plane001
     2300004: Plane002
@@ -56,6 +58,7 @@ ModelImporter:
     2300028: FloorLeft
     2300030: FloorRight
     2300032: //RootNode
+    2300034: FloorRims
     3300000: Box002
     3300002: Plane001
     3300004: Plane002
@@ -73,6 +76,7 @@ ModelImporter:
     3300028: FloorLeft
     3300030: FloorRight
     3300032: //RootNode
+    3300034: FloorRims
     4300000: Box002
     4300002: Plane001
     4300004: Plane002
@@ -89,6 +93,7 @@ ModelImporter:
     4300026: Floor
     4300028: FloorLeft
     4300030: FloorRight
+    4300032: FloorRims
     9500000: //RootNode
   materials:
     importMaterials: 1

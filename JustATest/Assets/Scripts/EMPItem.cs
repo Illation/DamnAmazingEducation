@@ -190,6 +190,9 @@ public class EMPItem : MonoBehaviour, IItem
         _attached = true;
         _targetThruster.IsHighlighted = false;
         _empLight.enabled = true;
+
+        transform.parent = _targetThruster.transform;
+        //transform.localPosition = Vector3.zero;
     }
 
     void Explode()

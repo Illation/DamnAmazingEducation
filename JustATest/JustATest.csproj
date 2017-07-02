@@ -154,6 +154,7 @@
     <Compile Include="Assets\Scripts\WallController.cs" />
     <Compile Include="Assets\Scripts\Waypoint.cs" />
     <Compile Include="Assets\SpriteBillboard.cs" />
+    <Compile Include="Assets\TimerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />

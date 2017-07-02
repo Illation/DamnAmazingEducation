@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     public bool playerTwo = false;
     public TextureOffsetController tracks;
     public ParticleSystem[] trackParticles;
+    public ParticleSystem[] boostTrackParticles;
     public ParticleSystem smokeParticles;
     public GameObject spawn;//, exit, entry; unused currently
     [HideInInspector]
@@ -90,15 +91,29 @@ public class PlayerController : MonoBehaviour {
         else _body.velocity = Vector3.zero;
         if (_body.velocity.sqrMagnitude > Mathf.Epsilon) {
             tracks.active = true;
-            if (!trackParticles[0].isEmitting) trackParticles[0].Simulate(0, true, true);
-            if (!trackParticles[1].isEmitting) trackParticles[1].Simulate(0, true, true);
-            trackParticles[0].Play();
-            trackParticles[1].Play();
+            if (!_boostActive) {
+                boostTrackParticles[0].Stop();
+                boostTrackParticles[1].Stop();
+                if (!trackParticles[0].isEmitting) trackParticles[0].Simulate(0, true, true);
+                if (!trackParticles[1].isEmitting) trackParticles[1].Simulate(0, true, true);
+                trackParticles[0].Play();
+                trackParticles[1].Play();
+            }
+            else {
+                trackParticles[0].Stop();
+                trackParticles[1].Stop();
+                if (!boostTrackParticles[0].isEmitting) boostTrackParticles[0].Simulate(0, true, true);
+                if (!boostTrackParticles[1].isEmitting) boostTrackParticles[1].Simulate(0, true, true);
+                boostTrackParticles[0].Play();
+                boostTrackParticles[1].Play();
+            }
         }
         else {
             tracks.active = false;
             trackParticles[0].Stop();
             trackParticles[1].Stop();
+            boostTrackParticles[0].Stop();
+            boostTrackParticles[1].Stop();
         }
         _body.angularVelocity = Vector3.zero;
 
