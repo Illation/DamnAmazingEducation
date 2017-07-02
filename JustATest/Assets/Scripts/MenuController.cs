@@ -23,18 +23,19 @@ public class MenuController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetAxis("Vertical Menu") < -0.1 && selectedOption > 0) {
+        if ((Input.GetAxis("Vertical Menu") < -0.1 || Input.GetKey(KeyCode.W)) && selectedOption > 0) {
             selectedOption--;
             selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
             selectionTimer = selectionCooldown;
             arrowMoveSound.Play();
         }
-        else if (Input.GetAxis("Vertical Menu") > 0.1f && selectedOption < amountOfOptions - 1) {
+        else if ((Input.GetAxis("Vertical Menu") > 0.1f || Input.GetKey(KeyCode.S)) && selectedOption < amountOfOptions - 1) {
             selectedOption++;
             selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
             selectionTimer = selectionCooldown;
             arrowMoveSound.Play();
         }
+        else if (Input.GetKey(KeyCode.Return)) UsePanelOption((int)selectedOption);
     }
 
     void HandleButtons() {
@@ -45,13 +46,27 @@ public class MenuController : MonoBehaviour {
             selectionSound.Play();
         }
         else if (Input.GetButtonDown("Select")) {
-            switch (selectedOption) {
-                case 0: beginGameSound.Play(); SceneManager.LoadScene(1); break;
-                case 1: selectionSound.Play(); menuPanel.SetActive(false); controlsPanel.SetActive(true); creditsPanel.SetActive(false); break;
-                case 2: selectionSound.Play(); menuPanel.SetActive(false); controlsPanel.SetActive(false); creditsPanel.SetActive(true); break;
-                case 3: selectionSound.Play(); Application.Quit(); break;
-                default: break;
-            }
+            UsePanelOption((int)selectedOption);
+        }
+    }
+
+    public void SelectButton(int index) {
+        selectedOption = (uint)index;
+        selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
+        selectionSound.Play();
+    }
+
+    public void ClickButton(int index) {
+        UsePanelOption(index);
+    }
+
+    private void UsePanelOption(int index) {
+        switch (index) {
+            case 0: beginGameSound.Play(); SceneManager.LoadScene(1); break;
+            case 1: selectionSound.Play(); menuPanel.SetActive(false); controlsPanel.SetActive(true); creditsPanel.SetActive(false); break;
+            case 2: selectionSound.Play(); menuPanel.SetActive(false); controlsPanel.SetActive(false); creditsPanel.SetActive(true); break;
+            case 3: selectionSound.Play(); Application.Quit(); break;
+            default: break;
         }
     }
 }
