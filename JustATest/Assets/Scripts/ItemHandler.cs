@@ -11,14 +11,28 @@ public class ItemHandler : MonoBehaviour {
     private GameObject _activeItem;
     private bool _pickupKeyDown = false;
     private string _pickupAxis = "";
+    public GameObject _buttonPrompt;
+    public float _promptTimer = 0;
+    public Vector3 _promptOffset = new Vector3(-1.18f, -0.509f, 0);
 	// Use this for initialization
 	void Start () {
         _transSelf = transform;
         _pickupAxis = "Pickup" + JoyStickNum;
+        _buttonPrompt.transform.parent = null;
+        _buttonPrompt.transform.rotation = Quaternion.Euler(0, 90, 0);
     }
 	
 	// Update is called once per frame
 	void Update () {
+        _buttonPrompt.transform.position = transform.position + _promptOffset;
+        _buttonPrompt.SetActive(_promptTimer > 0);
+
+        if (_promptTimer > 0)
+        {
+            _promptTimer -= Time.deltaTime;
+            if (_promptTimer < 0) _promptTimer = 0;
+        }
+
         if (Input.GetAxis(_pickupAxis) > 0 && !_pickupKeyDown)
         {
             _pickupKeyDown = true;
@@ -50,9 +64,14 @@ public class ItemHandler : MonoBehaviour {
                         }
                     }
 
-                    if (!(minLen <= (GrabDistance * GrabDistance))) return;
 
+                    if (!(minLen <= (GrabDistance * GrabDistance)))
+                    {
+                        return;
+                    }
+ 
                     IItem itemComponent = items[closestIndex].GetComponent<IItem>();
+                    
                     if (itemComponent != null)
                     {
                         if (itemComponent.Grab(GrabOrigin))
@@ -75,4 +94,9 @@ public class ItemHandler : MonoBehaviour {
             _pickupKeyDown = false;
         }
 	}
+
+    public void EnableButtonPrompt()
+    {
+        _promptTimer = 0.1f;
+    }
 }
