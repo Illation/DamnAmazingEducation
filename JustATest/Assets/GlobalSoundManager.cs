@@ -46,6 +46,10 @@ public class GlobalSoundManager : MonoBehaviour
     [SerializeField]
     AudioSource SourceRight;
     [SerializeField]
+    AudioSource SourceLeftPlayer;
+    [SerializeField]
+    AudioSource SourceRightPlayer;
+    [SerializeField]
     AudioSource SourceCenter;
     [SerializeField]
     float SideSourceDistance = 0.4f;
@@ -98,6 +102,16 @@ public class GlobalSoundManager : MonoBehaviour
         _sourceMusic = GetComponent<AudioSource>();
         _sourceMusic.clip = Music;
         _sourceMusic.loop = true;
+
+        SourceLeftPlayer.clip = LeftMove;
+        SourceLeftPlayer.loop = true;
+        SourceLeftPlayer.volume = 0;
+        SourceLeftPlayer.Play();
+
+        SourceRightPlayer.clip = RightMove;
+        SourceRightPlayer.loop = true;
+        SourceRightPlayer.volume = 0;
+        SourceRightPlayer.Play();
 
         SetMusicPlaying(true);
 	}
@@ -194,6 +208,20 @@ public class GlobalSoundManager : MonoBehaviour
         else
         {
             _sourceMusic.Pause();
+        }
+    }
+
+    public void SetPlayerVolumePitch(bool left, float volume, float pitch)
+    {
+        if(left)
+        {
+            SourceLeftPlayer.volume = volume;
+            SourceLeftPlayer.pitch = pitch;
+        }
+        else
+        {
+            SourceRightPlayer.volume = volume;
+            SourceRightPlayer.pitch = pitch;
         }
     }
 }

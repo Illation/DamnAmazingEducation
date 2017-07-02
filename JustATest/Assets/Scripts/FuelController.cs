@@ -12,6 +12,7 @@ public class FuelController : MonoBehaviour, IItem {
         transform.SetParent(origin);
         transform.localPosition = Vector3.zero;
         owner = origin.root.GetComponent<PlayerController>();
+        GlobalSoundManager.instance.PlayClip(GlobalSounds.PickUpFuel, SourcePosition.Center, 1);
         return true;
     }
 
@@ -22,6 +23,7 @@ public class FuelController : MonoBehaviour, IItem {
             Debug.Log("Loading " + closestThruster);
             closestThruster.Load();
             GameManager.instance.DestroyObject(this.GetComponent<ObjectController>());
+            GlobalSoundManager.instance.PlayClip(GlobalSounds.PlaceFuelTank, SourcePosition.Center, 1);
             return true;
         }
         else {
