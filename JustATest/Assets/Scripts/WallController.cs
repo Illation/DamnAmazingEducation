@@ -32,6 +32,7 @@ public class WallController : MonoBehaviour
     float UpgradeMultiplier = 10;
     [SerializeField]
     float UpgradeTime = 10;
+    public FloorAnimator floorAnimator;
     private float _upgradeTimer = 0;
     public float UpgradeTimer
     {
@@ -136,6 +137,7 @@ public class WallController : MonoBehaviour
                 }
             }
             _upgradeTimer = 0;
+            floorAnimator.ActivateUpgradeAnimation();
         }
 
         //end state
