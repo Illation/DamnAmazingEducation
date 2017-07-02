@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Arrow.cs" />
     <Compile Include="Assets\GlobalSoundManager.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Assets\Scripts\TextureOffsetController.cs" />
     <Compile Include="Assets\Scripts\Thruster.cs" />
     <Compile Include="Assets\Scripts\ThrusterButton.cs" />
+    <Compile Include="Assets\Scripts\UVOffsetController.cs" />
     <Compile Include="Assets\Scripts\WallController.cs" />
     <Compile Include="Assets\Scripts\Waypoint.cs" />
     <Compile Include="Assets\SpriteBillboard.cs" />
