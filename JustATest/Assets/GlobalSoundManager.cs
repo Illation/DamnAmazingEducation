@@ -9,6 +9,7 @@ public enum GlobalSounds
 
     EmpThrow,
     EmpExplode,
+    EmpDefuse,
     GrenadeExplode,
     GrenadeThrow,
     ItemSpawn,
@@ -56,6 +57,8 @@ public class GlobalSoundManager : MonoBehaviour
     [SerializeField]
     AudioSource SourceCenter;
     [SerializeField]
+    AudioSource SourceEmpCharge;
+    [SerializeField]
     float SideSourceDistance = 0.4f;
 
 
@@ -72,6 +75,7 @@ public class GlobalSoundManager : MonoBehaviour
     [Header("Item Sounds")]
     [SerializeField] AudioClip EmpThrow;
     [SerializeField] AudioClip EmpExplode;
+    [SerializeField] AudioClip EmpDefuse;
     [SerializeField] AudioClip GrenadeExplode;
     [SerializeField] AudioClip GrenadeThrow;
     [SerializeField] AudioClip ItemSpawn;
@@ -127,6 +131,10 @@ public class GlobalSoundManager : MonoBehaviour
         SourceRightThrust.volume = 0;
         SourceRightThrust.Play();
 
+        SourceEmpCharge.clip = EmpCharge;
+        SourceEmpCharge.loop = false;
+        SourceEmpCharge.volume = 1;
+
         SetMusicPlaying(true);
 	}
 	
@@ -165,6 +173,8 @@ public class GlobalSoundManager : MonoBehaviour
                 return EmpThrow;
             case GlobalSounds.EmpExplode:
                 return EmpExplode;
+            case GlobalSounds.EmpDefuse:
+                return EmpDefuse;
             case GlobalSounds.GrenadeExplode:
                 return GrenadeExplode;
             case GlobalSounds.GrenadeThrow:
@@ -247,6 +257,19 @@ public class GlobalSoundManager : MonoBehaviour
         else
         {
             SourceRightThrust.volume = volume;
+        }
+    }
+    public void PlayStopEmp(bool play)
+    {
+        if(play)
+        {
+            SourceEmpCharge.Play();
+            SourceEmpCharge.volume = 1;
+            SourceEmpCharge.clip = EmpCharge;
+        }
+        else
+        {
+            SourceEmpCharge.Stop();
         }
     }
 }

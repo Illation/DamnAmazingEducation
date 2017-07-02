@@ -141,6 +141,8 @@ public class EMPItem : MonoBehaviour, IItem
             if (distToPlayer < PickupRadius)
             {
                 // eat
+                GlobalSoundManager.instance.PlayStopEmp(false);
+                GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpDefuse, SourcePosition.Center, 1);
                 BoostPlayer();
                 return;
             }
@@ -176,7 +178,7 @@ public class EMPItem : MonoBehaviour, IItem
 
     void AttachToThruster()
     {
-        GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpCharge, SourcePosition.Center, 1);
+        GlobalSoundManager.instance.PlayStopEmp(true);
         _attached = true;
         _targetThruster.IsHighlighted = false;
         _empLight.enabled = true;
