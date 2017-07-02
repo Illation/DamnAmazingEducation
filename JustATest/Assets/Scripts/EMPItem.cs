@@ -25,11 +25,12 @@ public class EMPItem : MonoBehaviour, IItem
     private int _maxThrusterID = 0;
     private Projector _empLight;
     private bool _destroy = false;
-
+    private CameraController _camController;
     void Start()
     {
         _empLight = GetComponentInChildren<Projector>();
         _empLight.enabled = false;
+        _camController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
     }
 
     public bool Grab(Transform origin)
@@ -185,6 +186,7 @@ public class EMPItem : MonoBehaviour, IItem
     void Explode()
     {
         GlobalSoundManager.instance.PlayClip(GlobalSounds.EmpExplode, SourcePosition.Center, 1);
+        _camController.AddScreenShake(3.0f, 5.0f, 0.2f, true);
         _targetThruster.Discharge();
         _destroy = true;
     }
