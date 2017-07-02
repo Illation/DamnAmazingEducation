@@ -45,6 +45,8 @@ public class WallController : MonoBehaviour
     public bool LeftWon = false;
     public bool RightWon = false;
 
+    private CameraController _camera;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -71,17 +73,24 @@ public class WallController : MonoBehaviour
                 Quaternion.Euler(new Vector3(0, 0, 0)), this.transform);
             RightThrusters.Add(instance);
         }
+
+        _camera = GameObject.Find("Main Camera").GetComponent<CameraController>();
 	}
 	
 	void Update ()
     {
         //Move Wall
+        float leftVolume = 0;
+        float rightVolume = 0;
+
         float wallForce = 0;
         for (int i = 0; i < NumThrusters; i++)
         {
             wallForce += LeftThrusters[i].Thrust;
+            leftVolume += LeftThrusters[i].Thrust;
 
             wallForce -= RightThrusters[i].Thrust;
+            rightVolume += RightThrusters[i].Thrust;
         }
         float moveMult = MovementMultiplier + UpgradeMultiplier * _upgradeLevel * _upgradeLevel;
 
@@ -92,6 +101,10 @@ public class WallController : MonoBehaviour
         {
             transform.position += new Vector3(0, 0, _movement) * Time.deltaTime;
         }
+
+        GlobalSoundManager.instance.SetThrusterVolume(true, leftVolume * 2);
+        GlobalSoundManager.instance.SetThrusterVolume(false, rightVolume * 2);
+        _camera.AddScreenShake((leftVolume + rightVolume) * 0.4f, 2, 0.3f);
 
         //Upgrade Thrusters
         _upgradeTimer += Time.deltaTime;

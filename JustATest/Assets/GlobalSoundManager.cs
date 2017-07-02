@@ -50,6 +50,10 @@ public class GlobalSoundManager : MonoBehaviour
     [SerializeField]
     AudioSource SourceRightPlayer;
     [SerializeField]
+    AudioSource SourceLeftThrust;
+    [SerializeField]
+    AudioSource SourceRightThrust;
+    [SerializeField]
     AudioSource SourceCenter;
     [SerializeField]
     float SideSourceDistance = 0.4f;
@@ -112,6 +116,16 @@ public class GlobalSoundManager : MonoBehaviour
         SourceRightPlayer.loop = true;
         SourceRightPlayer.volume = 0;
         SourceRightPlayer.Play();
+
+        SourceLeftThrust.clip = RocketThrusters;
+        SourceLeftThrust.loop = true;
+        SourceLeftThrust.volume = 0;
+        SourceLeftThrust.Play();
+
+        SourceRightThrust.clip = RocketThrusters;
+        SourceRightThrust.loop = true;
+        SourceRightThrust.volume = 0;
+        SourceRightThrust.Play();
 
         SetMusicPlaying(true);
 	}
@@ -222,6 +236,17 @@ public class GlobalSoundManager : MonoBehaviour
         {
             SourceRightPlayer.volume = volume;
             SourceRightPlayer.pitch = pitch;
+        }
+    }
+    public void SetThrusterVolume(bool left, float volume)
+    {
+        if(left)
+        {
+            SourceLeftThrust.volume = volume;
+        }
+        else
+        {
+            SourceRightThrust.volume = volume;
         }
     }
 }
