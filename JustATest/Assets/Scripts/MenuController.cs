@@ -23,13 +23,13 @@ public class MenuController : MonoBehaviour {
             return;
         }
 
-        if ((Input.GetAxis("Vertical Menu") < -0.1 || Input.GetKey(KeyCode.W)) && selectedOption > 0) {
+        if ((Input.GetAxis("Vertical Menu") < -0.1 || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && selectedOption > 0) {
             selectedOption--;
             selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
             selectionTimer = selectionCooldown;
             arrowMoveSound.Play();
         }
-        else if ((Input.GetAxis("Vertical Menu") > 0.1f || Input.GetKey(KeyCode.S)) && selectedOption < amountOfOptions - 1) {
+        else if ((Input.GetAxis("Vertical Menu") > 0.1f || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && selectedOption < amountOfOptions - 1) {
             selectedOption++;
             selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
             selectionTimer = selectionCooldown;
