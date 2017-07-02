@@ -15,7 +15,7 @@ public class Thruster : MonoBehaviour
     private float _thrustDec = 0;
 
     [SerializeField]
-    public ParticleSystem ThrustParticles;//, ElectricityParticles;
+    public ParticleSystem ThrustParticles, FuelLoadingParticle;
     [SerializeField]
     float ThrustParticleLifetime = 2;
 
@@ -92,6 +92,7 @@ public class Thruster : MonoBehaviour
     public void Load()
     {
         IsLoaded = true;
+        FuelLoadingParticle.Play();
         FuelCell.SetActive(true);
     }
 
