@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: 15288cef26d218c47a362179f051ee85
+guid: a2173042688f6834d8564c52bea34b04
+timeCreated: 1498992942
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -7,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: EMPCircle
+    4300000: Plane003
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -33,7 +35,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
