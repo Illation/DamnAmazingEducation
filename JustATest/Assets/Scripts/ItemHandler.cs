@@ -25,6 +25,11 @@ public class ItemHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!GetComponent<PlayerController>().alive && _activeItem != null)
+        {
+            ObjectController objCont = _activeItem.GetComponent<ObjectController>();
+            if (objCont != null) objCont.Destroy();
+        }
         _buttonPrompt.transform.position = transform.position + _promptOffset;
         _buttonPrompt.SetActive(_promptTimer > 0);
 
