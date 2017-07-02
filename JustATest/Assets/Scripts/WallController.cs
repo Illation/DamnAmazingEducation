@@ -89,6 +89,7 @@ public class WallController : MonoBehaviour
 	
 	void Update ()
     {
+        if (UpgradeTimer < 1.0f) floorAnimator.ActivateUpgradeAnimation();
         //Move Wall
         float leftVolume = 0;
         float rightVolume = 0;
@@ -137,7 +138,6 @@ public class WallController : MonoBehaviour
                 }
             }
             _upgradeTimer = 0;
-            floorAnimator.ActivateUpgradeAnimation();
         }
 
         //end state
