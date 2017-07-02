@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 public class GameManager : MonoBehaviour {
 
@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour {
     public uint maxObjects = 10;
     [HideInInspector]
     public WallController wall;
-
+    public GameObject GameQuitPanel, GameOverPanel;
+    
     [SerializeField]
-    Canvas GameOverUI;
     public bool GameOver = true;
+
+    private bool quittingGame = false;
 
     void Awake() {
         if (instance == null)
@@ -22,34 +24,40 @@ public class GameManager : MonoBehaviour {
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
         wall = GameObject.Find("Wall").GetComponent<WallController>();
-
-        GameOverUI = GameObject.Find("EndGameUI").GetComponent<Canvas>();
-
-        GameOverUI.gameObject.SetActive(false);
+        GameQuitPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
     }
 
     private void Update()
     {
-        wall = GameObject.Find("Wall").GetComponent<WallController>();
-        if(!GameOverUI)
-        {
-            GameOverUI = GameObject.Find("EndGameUI").GetComponent<Canvas>();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start")) {
+            if (quittingGame) CancelQuit();
+            else QuitGame();
         }
+        else if (quittingGame) {
+            if (Input.GetButtonDown("Select") || Input.GetKeyDown(KeyCode.Return)) {
+                SceneManager.LoadScene(0);
+            }
+            else if (Input.GetButtonDown("Back")) CancelQuit();
+        }
+
+        wall = GameObject.Find("Wall").GetComponent<WallController>();
+
         if(wall.LeftWon || wall.RightWon)
         {
-            //Open UI
             GameOver = true;
-            GameOverUI.gameObject.SetActive(true);
+            GameOverPanel.SetActive(true);
+            StartCoroutine(DelayedQuit());
         }
         else
         {
-            GameOverUI.gameObject.SetActive(false);
+            GameOverPanel.SetActive(false);
         }
     }
 
@@ -65,5 +73,20 @@ public class GameManager : MonoBehaviour {
     {
         objects.Remove(obj);
         Destroy(obj.gameObject);
+    }
+
+    private void QuitGame() {
+        quittingGame = true;
+        GameQuitPanel.SetActive(true);
+    }
+
+    private void CancelQuit() {
+        quittingGame = false;
+        GameQuitPanel.SetActive(false);
+    }
+
+    IEnumerator DelayedQuit() {
+        yield return new WaitForSeconds(2.0f);
+        SceneManager.LoadScene(0);
     }
 }

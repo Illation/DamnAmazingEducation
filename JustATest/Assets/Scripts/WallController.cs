@@ -34,6 +34,8 @@ public class WallController : MonoBehaviour
     float UpgradeTime = 10;
     private float _upgradeTimer = 0;
     private uint _upgradeLevel = 0;
+    [SerializeField]
+    GameObject UpgradePrefab;
 
     [Header("EndGame")]
     [SerializeField]
@@ -114,7 +116,9 @@ public class WallController : MonoBehaviour
             for (int i = 0; i < NumThrusters; i++)
             {
                 LeftThrusters[i].UpgradeLevel = _upgradeLevel;
+                Instantiate(UpgradePrefab, LeftThrusters[i].transform.position-new Vector3(0, 0, 1), Quaternion.identity);
                 RightThrusters[i].UpgradeLevel = _upgradeLevel;
+                Instantiate(UpgradePrefab, RightThrusters[i].transform.position + new Vector3(0, 0, 1), Quaternion.identity);
             }
             _upgradeTimer = 0;
         }
