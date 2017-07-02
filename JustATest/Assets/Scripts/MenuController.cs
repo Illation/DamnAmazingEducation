@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour {
     public RectTransform selectionArrow;
     public RectTransform[] buttonTransforms;
     public GameObject menuPanel, controlsPanel, creditsPanel;
+    public AudioSource arrowMoveSound, selectionSound, beginGameSound;
     public float selectionCooldown = 0.1f;
 
     private RectTransform rect;
@@ -26,11 +27,13 @@ public class MenuController : MonoBehaviour {
             selectedOption--;
             selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
             selectionTimer = selectionCooldown;
+            arrowMoveSound.Play();
         }
         else if (Input.GetAxis("Vertical Menu") > 0.1f && selectedOption < amountOfOptions - 1) {
             selectedOption++;
             selectionArrow.position = new Vector3(selectionArrow.position.x, buttonTransforms[selectedOption].position.y, selectionArrow.position.z);
             selectionTimer = selectionCooldown;
+            arrowMoveSound.Play();
         }
     }
 
@@ -39,13 +42,14 @@ public class MenuController : MonoBehaviour {
             menuPanel.SetActive(true);
             controlsPanel.SetActive(false);
             creditsPanel.SetActive(false);
+            selectionSound.Play();
         }
         else if (Input.GetButtonDown("Select")) {
             switch (selectedOption) {
-                case 0: SceneManager.LoadScene(1); break;
-                case 1: menuPanel.SetActive(false); controlsPanel.SetActive(true); creditsPanel.SetActive(false); break;
-                case 2: menuPanel.SetActive(false); controlsPanel.SetActive(false); creditsPanel.SetActive(true); break;
-                case 3: Application.Quit(); break;
+                case 0: beginGameSound.Play(); SceneManager.LoadScene(1); break;
+                case 1: selectionSound.Play(); menuPanel.SetActive(false); controlsPanel.SetActive(true); creditsPanel.SetActive(false); break;
+                case 2: selectionSound.Play(); menuPanel.SetActive(false); controlsPanel.SetActive(false); creditsPanel.SetActive(true); break;
+                case 3: selectionSound.Play(); Application.Quit(); break;
                 default: break;
             }
         }
