@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour {
     private bool _boostActive = false;
     private float _boostTimer = 0.0f;
     private float _movementSpeed; // How fast the player is moving
-    private float _respawnTimer = 0.0f;
+    private float _respawnTimer = -10.0f;
 
-    public float ArmHeight = 0;
+    public float ArmHeight = 20;
     [SerializeField]
     float RespawnHeightMultiplier = 5;
 
@@ -51,10 +51,10 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         _respawnTimer -= Time.deltaTime;
+        ArmHeight = Mathf.Abs(_respawnTimer)* Mathf.Abs(_respawnTimer) * RespawnHeightMultiplier;
         if (!alive) {
             if (_respawnTimer > 0.0f)
             {
-                ArmHeight = Mathf.Abs(_respawnTimer)* Mathf.Abs(_respawnTimer) * RespawnHeightMultiplier;
                 transform.position = spawn.transform.position+new Vector3(0, ArmHeight, 0);
 
                 if (_respawnTimer <= 0.0f) {

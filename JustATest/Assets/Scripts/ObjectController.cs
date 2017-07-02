@@ -5,7 +5,7 @@ public class ObjectController : MonoBehaviour {
     private GameManager GameManagerObj;
     public Waypoint nextWaypoint;
     public float speed = 1.0f;
-
+    
     void Start()
     {
         GameManagerObj = GameObject.FindObjectOfType<GameManager>();
@@ -15,7 +15,11 @@ public class ObjectController : MonoBehaviour {
         if (Vector3.SqrMagnitude(nextWaypoint.transform.position - transform.position) < Mathf.Epsilon)
         {
             if (nextWaypoint.nextWaypoint != null) nextWaypoint = nextWaypoint.nextWaypoint;
-            else if (GameManagerObj != null) GameManagerObj.DestroyObject(this);
+            else if (GameManagerObj != null)
+            {
+                Instantiate(GameManagerObj.DestroyParticles, transform.position, Quaternion.identity);
+                GameManagerObj.DestroyObject(this);
+            }
         }
 	}
 
