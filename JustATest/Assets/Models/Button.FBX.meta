@@ -14,6 +14,9 @@ ModelImporter:
     100012: Button
     100014: ButtonFrame
     100016: ButtonText
+    100018: Button004
+    100020: ButtonFrame004
+    100022: Text002
     400000: //RootNode
     400002: Plane016
     400004: Plane017
@@ -23,6 +26,9 @@ ModelImporter:
     400012: Button
     400014: ButtonFrame
     400016: ButtonText
+    400018: Button004
+    400020: ButtonFrame004
+    400022: Text002
     2300000: Plane016
     2300002: Plane017
     2300004: Plane018
@@ -31,6 +37,9 @@ ModelImporter:
     2300010: Button
     2300012: ButtonFrame
     2300014: ButtonText
+    2300016: Button004
+    2300018: ButtonFrame004
+    2300020: Text002
     3300000: Plane016
     3300002: Plane017
     3300004: Plane018
@@ -39,6 +48,9 @@ ModelImporter:
     3300010: Button
     3300012: ButtonFrame
     3300014: ButtonText
+    3300016: Button004
+    3300018: ButtonFrame004
+    3300020: Text002
     4300000: Plane016
     4300002: Plane017
     4300004: Plane018
@@ -47,6 +59,9 @@ ModelImporter:
     4300010: Button
     4300012: ButtonFrame
     4300014: ButtonText
+    4300016: Button004
+    4300018: ButtonFrame004
+    4300020: Text002
     9500000: //RootNode
   materials:
     importMaterials: 1
