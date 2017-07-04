@@ -80,15 +80,37 @@ public class PlayerController : MonoBehaviour {
         HandleMovement(); // Handle all the movement.
     }
 
-    void HandleMovement() {
-        if (!playerTwo) _moveDirection = Input.GetAxisRaw("Vertical") * cam.transform.forward + Input.GetAxisRaw("Horizontal") * cam.transform.right;
-        else _moveDirection = Input.GetAxisRaw("Vertical 2") * cam.transform.forward + Input.GetAxisRaw("Horizontal 2") * cam.transform.right;
-        _moveDirection.y = 0;
-        if (_moveDirection != Vector3.zero) transform.rotation = Quaternion.LookRotation(Vector3.Lerp(transform.forward, _moveDirection, 0.6f));
+    Vector2 GetPlayerInput()
+    {
+        Vector2 ret = Vector2.zero;
+
+        ret.x = Input.GetAxis("Horizontal " + (playerTwo ? "2" : "1") + " - KBD");
+        ret.y = Input.GetAxis("Vertical " + (playerTwo ? "2" : "1") + " - KBD");
+
+        if(ret == Vector2.zero)
+        {
+            ret.x = Input.GetAxis("Horizontal" + (playerTwo ? " 2" : ""));
+            ret.y = Input.GetAxis("Vertical" + (playerTwo ? " 2" : ""));
+        }
+
+        return ret;
+    }
+
+    void HandleMovement()
+    {
+        //Calc direction
+        var input = GetPlayerInput();
+        float camY = cam.transform.eulerAngles.y;
+        _moveDirection = input.y * new Vector3(-Mathf.Cos(camY), 0, -Mathf.Sin(camY)) + input.x * new Vector3(Mathf.Sin(camY), 0, Mathf.Cos(camY));
         _moveDirection.Normalize();
-        //_body.velocity = _moveDirection * movementSpeed;
+
+        //modify velocity
+        if (_moveDirection != Vector3.zero) transform.rotation = Quaternion.LookRotation(Vector3.Lerp(transform.forward, _moveDirection, 0.6f));
         if (_moveDirection.sqrMagnitude > Mathf.Epsilon) _body.velocity = transform.forward * _movementSpeed * _moveDirection.magnitude;
         else _body.velocity = Vector3.zero;
+        _body.angularVelocity = Vector3.zero;
+
+        //effects
         if (_body.velocity.sqrMagnitude > Mathf.Epsilon) {
             tracks.active = true;
             if (!_boostActive) {
@@ -115,7 +137,6 @@ public class PlayerController : MonoBehaviour {
             boostTrackParticles[0].Stop();
             boostTrackParticles[1].Stop();
         }
-        _body.angularVelocity = Vector3.zero;
 
         //Sounds
         float pitch = _boostActive ? 2 : 1;
