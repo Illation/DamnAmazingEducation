@@ -5,6 +5,8 @@ public class FloorAnimator : MonoBehaviour {
 
     public float wallAnimationDuration = 2.0f;
     public float UpgradeAnimationDuration = 2.0f;
+    public float wallMovingAnimationSpeed = 1.2f;
+    public float upgradeAnimationSpeed = 1.0f;
     public bool active = false;
 
     private TextureOffsetController texOffController;
@@ -21,15 +23,15 @@ public class FloorAnimator : MonoBehaviour {
 
     public void ActivateWallMovingAnimation(bool leftActive) {
         Reset();
-        if (leftActive) texOffController.xOffsetSpeed = 0.02f;
-        else texOffController.xOffsetSpeed = -0.02f;
+        if (leftActive) texOffController.xOffsetSpeed = wallMovingAnimationSpeed;
+        else texOffController.xOffsetSpeed = -wallMovingAnimationSpeed;
         duration = wallAnimationDuration;
         active = true;
     }
 
     public void ActivateUpgradeAnimation() {
         Reset();
-        texOffController.yOffsetSpeed = -0.01f;
+        texOffController.yOffsetSpeed = -upgradeAnimationSpeed;
         duration = UpgradeAnimationDuration;
         active = true;
     }

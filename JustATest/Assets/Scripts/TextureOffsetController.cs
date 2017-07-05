@@ -15,7 +15,7 @@ public class TextureOffsetController : MonoBehaviour {
        
 	void Update () {
         if (!active) return;
-        _offset += new Vector2(xOffsetSpeed, yOffsetSpeed);
+        _offset += new Vector2(xOffsetSpeed, yOffsetSpeed) * Time.deltaTime;
         _rend.material.SetTextureOffset("_MainTex", _offset);
 	}
 
