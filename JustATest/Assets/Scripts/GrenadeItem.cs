@@ -14,7 +14,7 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     private Vector3 _spinDir;
 
     [SerializeField]
-    Explosion ExplosionPrefab;
+    GameObject ExplosionPrefab;
 
     public bool Grab(Transform origin)
     {

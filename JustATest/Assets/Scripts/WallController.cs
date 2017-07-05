@@ -51,7 +51,7 @@ public class WallController : MonoBehaviour
     [SerializeField]
     float MaxFieldWidth;
     [SerializeField]
-    Explosion ExplosionPrefab;
+    GameObject ExplosionPrefab;
     public bool LeftWon = false;
     public bool RightWon = false;
 

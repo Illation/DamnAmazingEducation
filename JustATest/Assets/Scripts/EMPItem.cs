@@ -197,11 +197,6 @@ public class EMPItem : MonoBehaviour, IItem
 
     void Explode()
     {
-        for (int i = 0; i < _thrusters.Count; i++)
-        {
-            _thrusters[_thrusterID].IsHighlighted = false;
-        }
-
         _billboard.SetActive(false);
         _mesh.SetActive(false);
         GlobalSoundManager.instance.PlayStopEmp(false);
