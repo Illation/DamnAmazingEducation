@@ -5,10 +5,9 @@ using UnityEngine;
 public class GrenadeItem : MonoBehaviour, IItem  {
     private bool _thrown = false;
     public float ThrowingVelocity = 5.0f;
-    private float _pauseTime;
-    private bool _paused = false;
     private GameObject _throwingPlayer;
     private GameObject _enemyPlayer;
+    private GameManager _gm;
     private Vector3 _startingPoint;
     private float _startY;
     private Vector3 _spinDir;
@@ -16,6 +15,10 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     [SerializeField]
     GameObject ExplosionPrefab;
 
+    void Start()
+    {
+        _gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    }
     public bool Grab(Transform origin)
     {
         _throwingPlayer = origin.root.gameObject;
@@ -29,10 +32,9 @@ public class GrenadeItem : MonoBehaviour, IItem  {
             GlobalSoundManager.instance.PlayClip(GlobalSounds.DeflectGrenade, SourcePosition.Center, 1);
             _startingPoint = transform.position;
             _spinDir = -_spinDir;
-            _pauseTime = Time.realtimeSinceStartup;
-            Time.timeScale = 0;
-            _paused = true;
             ThrowingVelocity += 1.5f;
+            Debug.Log("Deflected");
+            _gm.Wait(0.1f);
             return true;
         }
         else
@@ -58,21 +60,15 @@ public class GrenadeItem : MonoBehaviour, IItem  {
     // Update is called once per frame
     void Update()
     {
-        if (_paused)
-        {
-            if (Time.realtimeSinceStartup - _pauseTime > 0.1f)
-            {
-                _paused = false;
-                Time.timeScale = 1;
-            }
-        }
-
         if (_thrown)
         {
-            if(!_enemyPlayer.GetComponent<PlayerController>().alive)
+
+            if (!_enemyPlayer.GetComponent<PlayerController>().alive)
             {
                 Explode();
+                return;
             }
+
             transform.Rotate(_spinDir * 10.0f);
             Vector3 posSelf = transform.position;
             posSelf.y = 0;
@@ -112,8 +108,8 @@ public class GrenadeItem : MonoBehaviour, IItem  {
         if (cam) camC = cam.GetComponent<CameraController>();
         if (camC) camC.AddScreenShake(10.0f, 2.0f, 0.5f, true);
         Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+        GlobalSoundManager.instance.PlayClip(GlobalSounds.GrenadeExplode, SourcePosition.Center, 1);
         ObjectController objCont = this.GetComponent<ObjectController>();
         if (objCont != null) objCont.Destroy();
-        GlobalSoundManager.instance.PlayClip(GlobalSounds.GrenadeExplode, SourcePosition.Center, 1);
     }
 }

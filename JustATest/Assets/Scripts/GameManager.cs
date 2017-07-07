@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour {
     public GameObject GameQuitPanel, GameOverPanel;
     public GameObject DestroyParticles;
 
+    private float _waitTimer;
+    private float _waitTime;
+    private bool _waiting = false;
+
     [SerializeField]
     public bool GameOver = true;
 
@@ -60,6 +64,24 @@ public class GameManager : MonoBehaviour {
         {
             GameOverPanel.SetActive(false);
         }
+
+        if (_waiting)
+        {
+            if (Time.realtimeSinceStartup - _waitTimer > 0.1f)
+            {
+                _waitTimer = 0;
+                _waiting = false;
+                Time.timeScale = 1;
+            }
+        }
+    }
+
+    public void Wait(float ms)
+    {
+        _waitTimer = Time.realtimeSinceStartup;
+        _waiting = true;
+        Time.timeScale = 0;
+        _waitTime = ms;
     }
 
     public void RestartGame()
